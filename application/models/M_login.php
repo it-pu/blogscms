@@ -87,6 +87,12 @@ class M_login extends CI_Model{
 				if (count($dataMhs) > 0) {
 					$this->session->set_userdata('loggedIn',1);
                     $LoginFrom = (array_key_exists('LoginFrom', $input)) ? $input['LoginFrom'] : '';
+                    $ta_db = 'ta_'.$dataMhs[0]['Year'];
+                    $data_ta  = $this->db->get_where($ta_db.'.students',
+                                                        array(
+                                                            'NPM' => $input['Username']  
+                                                            )
+                                                    )->result_array();
 					$DataUser = array(
                         'Name' => $dataMhs[0]['Name'],
                         'Username' => $dataMhs[0]['NPM'],
@@ -95,7 +101,7 @@ class M_login extends CI_Model{
                         'Year' => $dataMhs[0]['Year'],
                         'LoginFrom' => $LoginFrom,
                         // 'Status' => $dataMhs[0]['Status'],
-                        'PathPhoto' => 'https://pcam.podomorouniversity.ac.id/'.'uploads/students/ta_'.$dataMhs[0]['Year'].'/'.$dataMhs[0]['Photo']
+                        'PathPhoto' => 'https://pcam.podomorouniversity.ac.id/'.'uploads/students/ta_'.$dataMhs[0]['Year'].'/'.$data_ta[0]['Photo']
                     );
                     $Data=$this->session->set_userdata($DataUser);
 					
