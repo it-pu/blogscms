@@ -106,7 +106,7 @@
 	define("url_files","https://"."files.podomorouniversity.ac.id/", true);
 	// define("url_files","http://localhost/filespu/", true);
 	switch ($ServerName) {
-		case 'pcam.podomorouniversity.ac.id':
+		case 'adminblogs.podomorouniversity.ac.id':
 		    define("url_registration",$HostPath."admission.podomorouniversity.ac.id/", true);
             define("serverRoot",$HostPath."pcam.podomorouniversity.ac.id", true);
             define("url_pas",$HostPath."pcam.podomorouniversity.ac.id/", true);
@@ -125,7 +125,7 @@
             define("path_register_online","/var/www/html/registeronline/", true);
             define('ENVIRONMENT', 'production',true);
 			break;
-		case 'demopcam.podomorouniversity.ac.id':
+		case 'demoadminblogs.podomorouniversity.ac.id':
 		    define("url_registration",$HostPath."demoadmission.podomorouniversity.ac.id/", true);
             define("serverRoot",$HostPath."demopcam.podomorouniversity.ac.id", true);
             define("url_pas",$HostPath."demopcam.podomorouniversity.ac.id/", true);
