@@ -285,6 +285,7 @@
     $(document).on('click','#login',function () {
     	var Username = $('#username').val();
         var Password = $('#password').val();
+        var itsme = $(this);
 
         if(Username!='' && Username!=null && Password!='' && Password!=null){
 		    var url = base_url_js+'__cek_login';
@@ -293,6 +294,7 @@
 					Password : Password,
 				}
 	      	var token = jwt_encode(data,"UAP)(*");
+	      	loading_button2(itsme);
 			FormSubmitAuto(url, 'POST', [
 				          { name: 'token', value: token },
 				]);
@@ -314,6 +316,20 @@
 		} 
 
   	});
+
+  	$(document).off('keypress', '#username').on('keypress', '#username',function(e) {
+  		if (e.keyCode == 13) {
+  		    $('#password').focus();
+  		        return false;
+  		}
+  	})
+
+  	$(document).off('keypress', '#password').on('keypress', '#password',function(e) {
+  		if (e.keyCode == 13) {
+  		    $('#login').trigger('click');
+  		        return false;
+  		}
+  	})
 
 	</script>
 </body>

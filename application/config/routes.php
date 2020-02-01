@@ -83,6 +83,7 @@ $route['__upload_img'] = 'c_content/upload_image';
 // ====== LOGIN ========= //
 
 $route['__cek_login'] = 'c_login/cek_login';
+$route['logout'] = 'c_login/logout';
 
 
 

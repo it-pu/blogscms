@@ -351,7 +351,7 @@
 						<li><a href="pages_calendar.html"><i class="icon-calendar"></i> My Calendar</a></li>
 						<li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+						<li><a href="<?php echo base_url().'logout' ?>"><i class="icon-key"></i> Log Out</a></li>
 					</ul>
 				</li>
 				<!-- /user login dropdown -->
