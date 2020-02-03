@@ -13,7 +13,10 @@ class M_article extends CI_Model{
     // ========== CRUD Article ========== //
 
 	function list_article(){
-		$hasil= $this->db->query('select * from db_blogs.article order by ID_title desc');
+        // $hasil= $this->db->query('select * from db_blogs.article order by ID_title desc');
+		$hasil= $this->db->query('select a.*,b.Name from db_blogs.article  as a
+                                  join db_blogs.category as b on a.ID_category =  b.ID_category
+                                order by ID_title desc');
 		return $hasil->result();
 		
 	}

@@ -122,7 +122,7 @@ class C_content extends MY_Controller {
     	$this->_validate();
         $data = [
                 // 'ID_title'  => $this->input->post('id_title'), 
-                'Category'  => $this->input->post('category'), 
+                'ID_category'  => $this->input->post('category'), 
                 'Title' => $this->input->post('title'), 
                 'Content' => $this->input->post('content'),
                 'Url' => $this->input->post('url'),
@@ -155,7 +155,7 @@ class C_content extends MY_Controller {
         // $this->_validate();
         $data = array(
                	// 'ID_title' => $this->input->post('id'),
-                'Category'  => $this->input->post('category_edit'), 
+                'ID_category'  => $this->input->post('category_edit'), 
                 'Title' => $this->input->post('title_edit'), 
                 'Content' => $this->input->post('content_edit'),
                 'Url' => $this->input->post('url_edit'),
@@ -164,12 +164,12 @@ class C_content extends MY_Controller {
                 'UpdateBY' => $this->session->userdata('Name'),
             );
  
-        if($this->input->post('remove_photo')) // if remove photo checked
-        {
-            if(file_exists('upload/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))
-                unlink('upload/'.$this->input->post('remove_photo'));
-            $data['Images'] = '';
-        }
+        // if($this->input->post('remove_photo')) // if remove photo checked
+        // {
+        //     if(file_exists('upload/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))
+        //         unlink('upload/'.$this->input->post('remove_photo'));
+        //     $data['Images'] = '';
+        // }
  
         if(!empty($_FILES['photo']['name']))
         {
@@ -195,7 +195,7 @@ class C_content extends MY_Controller {
     	$id= $this->input->post('id');
     	 //delete file
         $idarticle = $this->m_article->get_by_id($id);
-        if($idarticle->Images!=''){
+        if($idarticle->Images!='' && file_exists('./upload/'.$idarticle->Images) ){
         	unlink('upload/'.$idarticle->Images);
         }
         // if(file_exists('upload/'.$idarticle->Images) && $idarticle->Images)

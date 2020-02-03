@@ -49,9 +49,9 @@
 						<table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
 							<thead>
 								<tr>
-									<th class="checkbox-column">
+									<!-- <th class="checkbox-column">
 										<input type="checkbox" class="uniform">
-									</th>
+									</th> -->
 									<th data-class="expand">Title</th>
 									<th>Author</th>
 									<th data-hide="phone">Create Date</th>
@@ -289,9 +289,9 @@
             dataType : 'json',
             success : function(data){
             	var html = '';
-            	var i;
+            	// var i;
             	for(i=0; i<data.length; i++){
-            	 	html += '<option value="'+data[i].Name+'">'+data[i].Name+'</option>';
+            	 	html += '<option value="'+data[i].ID_category+'">'+data[i].Name+'</option>';
 				}
                 $('#category').html(html);
             }
@@ -305,9 +305,9 @@
             dataType : 'json',
             success : function(data){
             	var html = '';
-            	var i;
+            	// var i;
             	for(i=0; i<data.length; i++){
-            	 	html += '<option value="'+data[i].Name+'">'+data[i].Name+'</option>';
+            	 	html += '<option value="'+data[i].ID_category+'">'+data[i].Name+'</option>';
 				}
                 $('#category_edit').html(html);
             }
@@ -330,15 +330,15 @@
                 var url_article = base_url_js +'edit_article';
                 for(i=0; i<data.length; i++){
                     html += '<tr>'+
-                    		'<td class="checkbox-column">'+
-									'<input type="checkbox" class="uniform">'+
-							'</td>'+
+       //              		'<td class="checkbox-column">'+
+							// 		'<input type="checkbox" class="uniform">'+
+							// '</td>'+
                             '<td>'+data[i].Title+'</td>'+
                             '<td>'+data[i].UpdateBY+'</td>'+
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
                             '<td style="text-align:left;">'+
-                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].Category+'" data-content="'+data[i].Content+'"  data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'">Edit</a>'+' '+
+                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+data[i].Content+'"  data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'">Edit</a>'+' '+
                                 '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_title+'">Delete</a>'+
                             '</td>'+
                             '</tr>';
@@ -362,7 +362,13 @@
 		    		 		
             $('[name="idtitle_edit"]').val(id);
             $('[name="title_edit"]').val(title);
-            $('[name="category_edit"]').val(category);
+
+            // $('[name="category_edit"]').val(category);
+            $("#category_edit option").filter(function() {
+               //may want to use $.trim in here
+               return $(this).val() == category; 
+            }).prop("selected", true);
+
             // $('#show_cat_edit_edit').append('<option value="'+category+'" selected>'+category+'</option>');
             // $('[name="content_edit"]').summernote("code",content);
             $('[name="content_edit"]').val(content);
@@ -377,14 +383,19 @@
             {
                 $('#label-photo').text('Change Photo'); // label photo upload
                 $('#photo-preview div').html('<img src="'+base_url_js+'upload/'+images+'" class="img-responsive">'); // show photo
-                $('#photo-preview div').append('<input type="checkbox" name="remove_photo" value="'+images+'"/> Remove photo when saving'); // remove photo
+                $('#photo-preview div').append('<div class="hide"><input type="checkbox" name="remove_photo" value="'+images+'" checked/> Remove photo when saving</div>'); // remove photo
  
             }
             else
             {
                 $('#label-photo').text('Upload Photo'); // label photo upload
                 $('#photo-preview div').text('(No photo)');
-            } 
+            }
+
+            // set default alert none
+            $('#alert1').addClass('none');
+            $('#alert1').removeClass('active');
+
         });
 		
    // ====== Save ===== //
@@ -449,8 +460,7 @@
 		{
     		$('#btn_update').text('saving...'); //change button text
     		$('#btn_update').attr('disabled',true); //set button disable
-    		$('#alert1').addClass('none');
-    		$('#alert1').removeClass('active');
+    		
 
     		var formData = new FormData($('#form1')[0]);
     		
@@ -467,19 +477,20 @@
                 	// console.log(data);
 			       	if(data.status) //if success close modal and reload ajax table
 		            {
-		                $('#btn_update').text('Save'); //change button text
-            			$('#btn_update').attr('disabled',false); //set button enable 
-            			document.getElementById("form1").reset();
-
-            			$('[name="idtitle_edit"]').val("");
-			            $('[name="title_edit"]').val("");
-			            $('[name="content_edit"]').val("");
-			            $('[name="url_edit"]').val("");
-			            $('[name="status_edit"]').val("");
-
             			$('#alert1').addClass('active');
             			$('#alert1').removeClass('none');
-            			$('#modal_edit').modal('hide');
+            			setTimeout(function(){ 
+				                $('#btn_update').text('Save'); //change button text
+		            			$('#btn_update').attr('disabled',false); //set button enable 
+		            			document.getElementById("form1").reset();
+
+		            			$('[name="idtitle_edit"]').val("");
+					            $('[name="title_edit"]').val("");
+					            $('[name="url_edit"]').val("");
+					            $('[name="status_edit"]').val("");
+            					$('#modal_edit').modal('hide');
+            				 }, 1000);
+            			
                 		show_article();
 		            }
 		            else
@@ -491,10 +502,10 @@
 		                }
 		                $('#alert1').addClass('active');
             			$('#alert1').removeClass('none');
+
+				       	$('#btn_update').text('Save'); //change button text
+	            		$('#btn_update').prop('disabled',false); //set button enable 
 		            }
-		            
-			       	$('#btn_update').text('Save'); //change button text
-            		$('#btn_update').prop('disabled',false); //set button enable 
 
 			    },
 			    error: function (data)
