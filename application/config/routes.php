@@ -54,12 +54,12 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['dashboard']='c_content/index';
-$route['article']='c_content/article';
+$route['content/article']='c_content/article';
 $route['add_article']='c_content/add_article';
 $route['about']='c_content/about';
 $route['edit_article/(:any)']='c_content/edit_article/$1';
 $route['show_category']='c_content/show_category';
-$route['category'] = 'c_content/category';
+$route['content/category'] = 'c_content/category';
 $route['contact']='c_content/contact';
 $route['login']='c_login/login';
 

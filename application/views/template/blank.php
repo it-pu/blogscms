@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<title>Dashboard | Podomoro University</title>
@@ -445,6 +444,7 @@
 		</div> 
 		<!-- /#project-switcher -->
 	</header> <!-- /.header -->
+
 	<div id="container">
 		<div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
@@ -456,70 +456,57 @@
 				
 				<!--=== Navigation ===-->
 				<ul id="nav">
-					<li class="current">
+					<li class="<?php if($this->uri->segment(1) == 'dashboard' ){echo 'current';} ?>">
 						<a href="#">
 							<i class="icon-dashboard"></i>
 							Dashboard
 						</a>
 					</li>
 
-					<li>
+					<li class="<?php if($this->uri->segment(1) == 'about' ){echo 'current';} ?>">
 						<a href="<?=  base_url('about')?>">
 							<i class="icon-globe"></i>
 							About
 						</a>
 						
 					</li>
-					<li>
+					<li class="<?php if($this->uri->segment(1) == 'content' ){echo 'current open';} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-desktop"></i>
 							Content
 <!-- 							<span class="label label-info pull-right">6</span>
  -->						</a>
 						<ul class="sub-menu">
-							<li>
-								<a href="<?=  base_url('article')?>">
+							<li class="<?php if($this->uri->segment(2) == 'article' ){echo 'current';} ?>">
+								<a href="<?=  base_url('content/article')?>">
 								<i class="icon-angle-right"></i>
 								Article
 								</a>
 							</li>
-							<li>
-								<a href="<?=  base_url('category')?>">
+							<li class="<?php if($this->uri->segment(2) == 'category' ){echo 'current';} ?>">
+								<a href="<?=  base_url('content/category')?>">
 								<i class="icon-angle-right"></i>
 								Category
 								</a>
 							</li>
-							<!-- <li>
-								<a href="<?=  base_url('article')?>">
-								<i class="icon-angle-right"></i>
-								Media
-								</a>
-							</li>
-							<li>
-								<a href="<?=  base_url('article')?>">
-								<i class="icon-angle-right"></i>
-								Event
-								</a>
-							</li> -->
-							
 						</ul>
 					</li>
 
-					<li>
+					<li class="<?php if($this->uri->segment(1) == 'contact' ){echo 'open';} ?>">
 						<a href="<?= base_url('contact')?>">
 							<i class="icon-book"></i>
 							Contact
 						</a>
 						
 					</li>
-					<li>
+					<!-- <li>
 						<a href="javascript:void(0);">
 							<i class="icon-user"></i>
 							User
 						</a>
 						
-					</li>
-					<li>
+					</li> -->
+					<li class="<?php if($this->uri->segment(1) == 'contact' ){echo 'setting';} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-cog"></i>
 							Setting

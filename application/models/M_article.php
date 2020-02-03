@@ -6,17 +6,30 @@ class M_article extends CI_Model{
     public function __construct()
     {
         parent::__construct();
-        // Load database prodi
         $this->load->library('JWT');
-        
     }
+
+    public function getNameUpdateBY($whereField = 'a.UpdateBY',$asfield = 'UpdateBY'){
+        $str = 'if( 
+                     (select count(*) as total from db_employees.employees where NIP = '.$whereField.' limit 1 ) = 1,
+                        #True
+                        (select Name from db_employees.employees where NIP = '.$whereField.' limit 1 ),
+                        #False
+                        (select Name from db_academic.auth_students where NPM = '.$whereField.' limit 1)  
+                  ) as '.$asfield.' ';
+        return $str;
+    }
+
     // ========== CRUD Article ========== //
 
 	function list_article(){
         // $hasil= $this->db->query('select * from db_blogs.article order by ID_title desc');
-		$hasil= $this->db->query('select a.*,b.Name from db_blogs.article  as a
-                                  join db_blogs.category as b on a.ID_category =  b.ID_category
-                                order by ID_title desc');
+		$hasil= $this->db->query('select a.*,b.Name,
+                                 '.$this->getNameUpdateBY().'
+                                 from db_blogs.article  as a
+                                 join db_blogs.category as b on a.ID_category =  b.ID_category
+                                 order by ID_title desc');
+
 		return $hasil->result();
 		
 	}
@@ -27,7 +40,7 @@ class M_article extends CI_Model{
 	}
 
 	function data_about($id){
-		return $this->db->get_where('db_blogs.about', array('ID_AboutUS' => $id))->row();
+		return $this->db->query('select a.ID_AboutUS,a.Title,a.Description,a.CreateAT,b.Name as UpdateBY from db_blogs.about as a join db_employees.employees as b on a.UpdateBY = b.NIP ')->row();
 
 		// $hasil= $this->db->query('SELECT * FROM about WHERE ID_AboutUS='.$id.'');
 		// return $hasil->result();
@@ -35,7 +48,7 @@ class M_article extends CI_Model{
 
 
 	function show_category(){
-		$hasil=$this->db->get('db_blogs.category');
+		$hasil=$this->db->query('select a.*,'.$this->getNameUpdateBY().' from db_blogs.category as a ');
 		return $hasil->result();
 	}
 

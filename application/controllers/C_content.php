@@ -89,7 +89,7 @@ class C_content extends MY_Controller {
                 // 'ID_title'  => $this->input->post('id_title'), 
                 'Name' => $this->input->post('title'), 
                 'CreateAT' => $dataTime,
-                'UpdateBY' => $this->session->userdata('Name'),
+                'UpdateBY' => $this->session->userdata('Username'),
             ];
 	    $insert = $this->m_article->save_category($data);
         // $result=$this->db->insert('article',$data);
@@ -105,7 +105,7 @@ class C_content extends MY_Controller {
                 // 'ID_title'  => $this->input->post('id_title'), 
                 'Name' => $this->input->post('title_edit'), 
                 'CreateAT' => $dataTime,
-                'UpdateBY' => $this->session->userdata('Name'),
+                'UpdateBY' => $this->session->userdata('Username'),
             ];
 
         $where =$this->input->post('idtitle_edit');
@@ -128,7 +128,7 @@ class C_content extends MY_Controller {
                 'Url' => $this->input->post('url'),
                 'Status' => $this->input->post('status'),
                 'CreateAT' => $dataTime,
-                'UpdateBY' => $this->session->userdata('Name'),
+                'UpdateBY' => $this->session->userdata('Username'),
             ];
              if(!empty($_FILES['photo']['name']))
 	        {
@@ -161,7 +161,7 @@ class C_content extends MY_Controller {
                 'Url' => $this->input->post('url_edit'),
                 'Status' => $this->input->post('status_edit'),
                 'CreateAT' => $dataTime,
-                'UpdateBY' => $this->session->userdata('Name'),
+                'UpdateBY' => $this->session->userdata('Username'),
             );
  
         // if($this->input->post('remove_photo')) // if remove photo checked
@@ -220,7 +220,7 @@ class C_content extends MY_Controller {
                 'Title' => $this->input->post('title'), 
                 'Description' => $this->input->post('content'),
                 'CreateAT' => $dataTime,
-                'UpdateBY' => $this->session->userdata('Name'),
+                'UpdateBY' => $this->session->userdata('Username'),
             );
         $this->m_article->update_about($data);        
         echo json_encode(array("status" => TRUE));
