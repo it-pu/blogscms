@@ -45,7 +45,7 @@ class M_login extends CI_Model{
 					$this->session->set_userdata('loggedIn',1);
 					$LoginFrom = (array_key_exists('LoginFrom', $input)) ? $input['LoginFrom'] : '';
 					$DataUser = array(
-                        'Name' => $dataEmp[0]['TitleAhead'].' '.$dataEmp[0]['Name'].' '.$dataEmp[0]['TitleBehind'],
+                        'Name' => (trim($dataEmp[0]['TitleAhead']) != '') ? $dataEmp[0]['TitleAhead'].' '.$dataEmp[0]['Name'].' '.$dataEmp[0]['TitleBehind'] : $dataEmp[0]['Name'].' '.$dataEmp[0]['TitleBehind'],
                         'Username' => $dataEmp[0]['NIP'],
                         'Email' => $dataEmp[0]['EmailPU'],
                         'User' => 'Employees',

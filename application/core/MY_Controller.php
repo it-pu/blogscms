@@ -19,7 +19,7 @@ class MY_Controller extends CI_Controller {
 
     public function template($content)
     {
-      
+      // print_r($this->uri->segment_array());die();
         $data['content'] = $content;
         $this->load->view('template/blank',$data);
     }
