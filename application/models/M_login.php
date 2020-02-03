@@ -47,6 +47,7 @@ class M_login extends CI_Model{
 					$DataUser = array(
                         'Name' => $dataEmp[0]['TitleAhead'].' '.$dataEmp[0]['Name'].' '.$dataEmp[0]['TitleBehind'],
                         'Username' => $dataEmp[0]['NIP'],
+                        'Email' => $dataEmp[0]['EmailPU'],
                         'User' => 'Employees',
                         'Year' => 0,
                         'LoginFrom' => $LoginFrom,
