@@ -44,6 +44,9 @@ class M_login extends CI_Model{
 				if (count($dataEmp) > 0) {
 					$this->session->set_userdata('loggedIn',1);
 					$LoginFrom = (array_key_exists('LoginFrom', $input)) ? $input['LoginFrom'] : '';
+                    $ArrPos = explode('.', $dataEmp[0]['PositionMain']);
+                    $DivisionID = $ArrPos[0];
+                    $PositionID = $ArrPos[1];
 					$DataUser = array(
                         'Name' => (trim($dataEmp[0]['TitleAhead']) != '') ? $dataEmp[0]['TitleAhead'].' '.$dataEmp[0]['Name'].' '.$dataEmp[0]['TitleBehind'] : $dataEmp[0]['Name'].' '.$dataEmp[0]['TitleBehind'],
                         'Username' => $dataEmp[0]['NIP'],
@@ -51,8 +54,13 @@ class M_login extends CI_Model{
                         'User' => 'Employees',
                         'Year' => 0,
                         'LoginFrom' => $LoginFrom,
-                        // 'Status' => $dataMhs[0]['Status'],
-                        'PathPhoto' => 'https://pcam.podomorouniversity.ac.id/'.'uploads/employees/'.$dataEmp[0]['Photo']
+                        'PositionMain' => $dataEmp[0]['PositionMain'],
+                        'PositionOther1' => $dataEmp[0]['PositionOther1'],
+                        'PositionOther2' => $dataEmp[0]['PositionOther2'],
+                        'PositionOther3' => $dataEmp[0]['PositionOther3'],
+                        'PathPhoto' => 'https://pcam.podomorouniversity.ac.id/'.'uploads/employees/'.$dataEmp[0]['Photo'],
+                        'DivisionID' => $DivisionID,
+                        'PositionID' => $PositionID,
                     );
                     $Data=$this->session->set_userdata($DataUser);
 
@@ -101,8 +109,13 @@ class M_login extends CI_Model{
                         'User' => 'Student',
                         'Year' => $dataMhs[0]['Year'],
                         'LoginFrom' => $LoginFrom,
-                        // 'Status' => $dataMhs[0]['Status'],
-                        'PathPhoto' => 'https://pcam.podomorouniversity.ac.id/'.'uploads/students/ta_'.$dataMhs[0]['Year'].'/'.$data_ta[0]['Photo']
+                        'PositionMain' => '',
+                        'PositionOther1' => '',
+                        'PositionOther2' => '',
+                        'PositionOther3' => '',
+                        'PathPhoto' => 'https://pcam.podomorouniversity.ac.id/'.'uploads/students/ta_'.$dataMhs[0]['Year'].'/'.$data_ta[0]['Photo'],
+                        'DivisionID' => '',
+                        'PositionID' => '',
                     );
                     $Data=$this->session->set_userdata($DataUser);
 					

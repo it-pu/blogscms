@@ -62,6 +62,7 @@ $route['show_category']='c_content/show_category';
 $route['content/category'] = 'c_content/category';
 $route['contact']='c_content/contact';
 $route['login']='c_login/login';
+$route['setting']='c_content/setting';
 
 // ======== CRUD ====== //
 
@@ -86,6 +87,11 @@ $route['__cek_login'] = 'c_login/cek_login';
 $route['logout'] = 'c_login/logout';
 
 
+
+// ======== CRUD Setting ====== //
+$route['__data_setting_group'] = 'c_content/data_setting_group';
+$route['__data_setting_member'] = 'c_content/data_setting_member';
+$route['__data_setting_listmember'] = 'c_content/data_setting_listmember';
 
 
 

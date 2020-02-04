@@ -20,6 +20,17 @@ class M_article extends CI_Model{
         return $str;
     }
 
+    public function getEMPorMHS($whereField = 'a.UpdateBY',$asfield = 'UpdateBY'){
+        $str = 'if( 
+                     (select count(*) as total from db_employees.employees where NIP = '.$whereField.' limit 1 ) = 1,
+                        #True
+                        "Employees",
+                        #False
+                        "Student"  
+                  ) as '.$asfield.' ';
+        return $str;
+    }
+
     // ========== CRUD Article ========== //
 
 	function list_article(){

@@ -86,9 +86,25 @@
 
 	<!-- Styled radio and checkboxes -->
 	<!-- DataTables -->
+	<!-- OLD dari Yamin
 	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/DT_bootstrap.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/responsive/datatables.responsive.js')?>"></script> <!-- optional -->
+	<!-- OLD dari Yamin -->
+
+	<!--<script type="text/javascript" src="--><!--plugins/datatables/jquery.dataTables.min.js"></script>-->
+	<script type="text/javascript" src="https://pcam.podomorouniversity.ac.id/assets/template/plugins/datatables/tes/jquery.dataTables.js"></script>
+	<!--<script type="text/javascript" src="--><!--plugins/datatables/tes/dataTables.bootstrap.min.js"></script>-->
+	<script type="text/javascript" src="https://pcam.podomorouniversity.ac.id/assets/template/plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
+	<script type="text/javascript" src="https://pcam.podomorouniversity.ac.id/assets/template/plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
+	<script type="text/javascript" src="https://pcam.podomorouniversity.ac.id/assets/template/plugins/datatables/DT_bootstrap.js"></script>
+	<!--<script type="text/javascript" src="--><!--plugins/datatables/dataTables.rowReorder.js"></script>-->
+
+	<!-- Plugin DataTbales -->
+	<script type="text/javascript" src="https://pcam.podomorouniversity.ac.id/assets/datatables/dataTables.rowsGroup.js"></script>
+	<!--toastr-->
+	<link href="https://pcam.podomorouniversity.ac.id/assets/template/plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="https://pcam.podomorouniversity.ac.id/assets/template/plugins/toastr/toastr.min.js"></script>
 
 	<!-- App -->
 	<script type="text/javascript" src="<?= base_url('assets/js/app.js')?>"></script>
@@ -104,6 +120,24 @@
 		App.init(); // Init layout and core plugins
 		// Plugins.init(); // Init all plugins
 		FormComponents.init(); // Init all form-specific plugins
+
+		toastr.options = {
+		  "closeButton": true,
+		  "debug": false,
+		  "newestOnTop": false,
+		  "progressBar": false,
+		  "positionClass": "toast-top-center",
+		  "preventDuplicates": false,
+		  "onclick": null,
+		  "showDuration": "300",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
 	});
 	</script>
 	<script type="text/javascript" src="<?= base_url('assets/js/demo/form_validation.js')?>"></script>
@@ -506,14 +540,12 @@
 						</a>
 						
 					</li> -->
-					<li class="<?php if($this->uri->segment(1) == 'contact' ){echo 'setting';} ?>">
-						<a href="javascript:void(0);">
+					<li class="<?php if($this->uri->segment(1) == 'setting' ){echo 'open';} ?>">
+						<a href="<?= base_url('setting')?>">
 							<i class="icon-cog"></i>
 							Setting
 						</a>
-						
 					</li>
-					
 						</ul>
 					</li>
 				</ul>
@@ -543,3 +575,130 @@
 
 </body>
 </html>
+
+<!-- Global Modal Large -->
+<div class="modal fade" id="GlobalModalLarge" role="dialog">
+    <div class="modal-dialog" role="document" style="width:900px;">
+        <div class="modal-content animated jackInTheBox">
+            <div class="modal-header"></div>
+            <div class="modal-body"></div>
+            <div class="modal-footer"></div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Global Modal Large -->
+<!-- Global Modal ExtraLarge -->
+<div class="modal fade" id="GlobalModalXtraLarge" role="dialog">
+    <div class="modal-dialog" role="document" style="width:1280px;">
+        <div class="modal-content animated jackInTheBox">
+            <div class="modal-header"></div>
+            <div class="modal-body"></div>
+            <div class="modal-footer"></div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+
+	function Validation_leastCharacter(leastNumber,string,theName) {
+	    var result = {status:1, messages:""};
+	    var stringLenght =  string.length;
+	    if (stringLenght < leastNumber) {
+	        result = {status : 0,messages: theName + " at least " + leastNumber + " character"};
+	    }
+	    return result;
+	}
+
+	function Validation_email(string,theName)
+	{
+	    var result = {status:1, messages:""};
+	    var regexx =  /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	    if (!string.match(regexx)) {
+	        result = {status : 0,messages: theName + " an invalid email address! "};
+	    }
+	    return result;
+	}
+
+	function Validation_email_gmail(string,theName)
+	{
+	    var result = {status:1, messages:""};
+	    var regexx =  /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/;
+	    if (!string.match(regexx)) {
+	        result = {status : 0,messages: theName + " only gmail allowed to register! "};
+	    }
+	    return result;
+	}
+
+	function Validation_required(string,theName)
+	{
+	    var result = {status:1, messages:""};
+	    if (string == "" || string == null) {
+	        result = {status : 0,messages: theName + " is required! "};
+	    }
+	    return result;
+	}
+
+	function Validation_numeric(string,theName)
+	{
+	    var result = {status:1, messages:""};
+	    var regexx =  /^\d+$/;
+	    if (!string.match(regexx)) {
+	        result = {status : 0,messages: theName + " only numeric! "};
+	    }
+	    return result;
+	}
+	function Validation_decimal(string,theName)
+	{
+	    var result = {status:1, messages:""};
+	    var regexx =  /^\d*\.?\d*$/;
+	    if (!string.match(regexx)) {
+	        result = {status : 0,messages: theName + " only decimal! "};
+	    }
+	    return result;
+	}
+
+	function AjaxSubmit(url='',token='',ArrUploadFilesSelector=[]){
+	     var def = jQuery.Deferred();
+	     var form_data = new FormData();
+	     form_data.append('token',token);
+	     if (ArrUploadFilesSelector.length>0) {
+	        for (var i = 0; i < ArrUploadFilesSelector.length; i++) {
+	            var NameField = ArrUploadFilesSelector[i].NameField+'[]';
+	            var Selector = ArrUploadFilesSelector[i].Selector;
+	            var UploadFile = Selector[0].files;
+	            for(var count = 0; count<UploadFile.length; count++)
+	            {
+	             form_data.append(NameField, UploadFile[count]);
+	            }
+	        }
+	     }
+
+	     $.ajax({
+	       type:"POST",
+	       url:url,
+	       data: form_data,
+	       contentType: false,       // The content type used when sending data to the server.
+	       cache: false,             // To unable request pages to be cached
+	       processData:false,
+	       dataType: "json",
+	       success:function(data)
+	       {
+	        def.resolve(data);
+	       },  
+	       error: function (data) {
+	         // toastr.info('No Result Data'); 
+	         def.reject();
+	       }
+	     })
+	     return def.promise();
+	}
+
+	function loading_button2(selector) {
+	    selector.html('<i class="fa fa-refresh fa-spin fa-fw right-margin"></i> Loading...');
+	    selector.prop('disabled',true);
+	}
+
+	function end_loading_button2(selector,html='Save'){
+	    selector.prop('disabled',false).html(html);
+	}
+</script>
