@@ -77,6 +77,8 @@ $route['__show_editarticle/(:any)'] = 'c_content/show_editarticle/$1';
 $route['__show_about']='c_content/show_about';
 $route['__update_about']='c_content/update_about';
 $route['__load_contact'] = 'c_content/show_contact';
+$route['__show_topic'] = 'c_content/show_topic';
+
 
 // summernote
 $route['__upload_img'] = 'c_content/upload_image';

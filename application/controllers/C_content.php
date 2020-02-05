@@ -33,6 +33,7 @@ class C_content extends MY_Controller {
 	public function article()
 	{
         $data['Arr_AS'] =  $this->db->query('select * from db_blogs.set_group where (Active = 1 or ID_set_group = 0) ')->result_array();
+        $data['Arr_Topic'] =  json_encode($this->db->query('select * from db_blogs.topic')->result_array());
 		$content = $this->load->view('V_article',$data,true);
 		parent::template($content);
 	}
@@ -499,6 +500,29 @@ class C_content extends MY_Controller {
         }
 
         echo json_encode($rs);
+    }
+
+    function show_topic(){
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        error_reporting(0);
+        $rs = ['status' => 0,'msg' => ''];
+        try {
+            $Input = $this->getInputToken();
+            $Input = json_decode(json_encode($Input),true);
+            $this->db->query('TRUNCATE TABLE db_blogs.show_topic');
+            for ($i=0; $i < count($Input); $i++) { 
+                $data = $Input[$i];
+                $this->db->insert('db_blogs.show_topic',$data);
+            }
+
+            $rs['status'] = 1;
+        } catch (Exception $e) {
+            $rs['msg'] = $e;
+        }
+
+        echo json_encode($rs);
+        
     }
 
     /// ============= ==============  ///
