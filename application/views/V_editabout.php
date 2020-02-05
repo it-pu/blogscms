@@ -146,7 +146,9 @@ $(document).ready(function() {
     		$('#btn_update').attr('disabled',true); //set button disable
 
     		var formData = new FormData($('#form')[0]);
-			formData.append("summernote", $('#Description').text() );
+    		// console.log($('.note-editable').text());return;
+			formData.append("summernote", $('.note-editable').text() );
+			// console.log(FormData);return;
     		// var formData = new FormData(this);
     		// formData.append("summernote", $('#Description').text() );
 	       	// var content = tinyMCE.get('content');
@@ -157,7 +159,7 @@ $(document).ready(function() {
 				cache: false,             // To unable request pages to be cached
 				processData:false,
                 dataType : "JSON",
-                data : {formData:formData},
+                data : formData,
                 success: function(data){
 
 			       	if(data.status) //if success close modal and reload ajax table
