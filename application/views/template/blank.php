@@ -6,7 +6,8 @@
 	<title>Dashboard | Podomoro University</title>
 
 	<!--=== CSS ===-->
-
+	<link href="<?= base_url('assets/img/favicon.png') ?>" rel="icon">
+	<link href="<?= base_url('assets/img/favicon.png') ?>" rel="apple-touch-icon">
 	<!-- Bootstrap -->
 	<link href="<?= base_url('assets/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet" type="text/css" />
 
@@ -30,7 +31,7 @@
 	<!--[if IE 8]>
 		<link href="<?= base_url('assets/css/ie8.css')?>" rel="stylesheet" type="text/css" />
 	<![endif]-->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+	<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'> -->
 	<link href="<?= base_url('assets/plugins/summernote/summernote.css')?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('assets/css/prettify.css')?>" rel="stylesheet" type="text/css" />
 
@@ -342,7 +343,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<!--<img alt="" src="<?= base_url('assets/img/avatar1_small.jpg')?>" />-->
 						<i class="icon-male"></i>
-						<span class="username">John Doe</span>
+						<span class="username"><?php echo $this->session->userdata('Name') ?></span>
 						<i class="icon-caret-down small"></i>
 					</a>
 					<ul class="dropdown-menu">
