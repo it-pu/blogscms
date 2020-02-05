@@ -81,8 +81,8 @@
 	<script type="text/javascript" src="<?= base_url('assets/plugins/noty/layouts/top.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/noty/themes/default.js')?>"></script>
 	<!-- bootstrap-wysihtml5 -->
-	<script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/wysihtml5.min.js')?>"></script>
-	<script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.min.js')?>"></script>
+	<!-- <script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/wysihtml5.min.js')?>"></script>
+	<script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.min.js')?>"></script> -->
 
 	<!-- Styled radio and checkboxes -->
 	<!-- DataTables -->
@@ -94,8 +94,8 @@
 	<script type="text/javascript" src="<?= base_url('assets/js/app.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/plugins.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/plugins.form-components.js')?>"></script>
-	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-  	<script>tinymce.init({selector:'textarea.default'});</script>
+	<!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  	<script>tinymce.init({selector:'textarea.default'});</script> -->
 
 
 	<script>
