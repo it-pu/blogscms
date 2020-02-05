@@ -364,7 +364,7 @@
 							// 		'<input type="checkbox" class="uniform">'+
 							// '</td>'+
                             '<td>'+data[i].Title+'</td>'+
-                            '<td>'+data[i].UpdateBY+'</td>'+
+                            '<td>'+data[i].UpdateBY+' As '+data[i].GroupName+'</td>'+
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
                             '<td style="text-align:left;">'+

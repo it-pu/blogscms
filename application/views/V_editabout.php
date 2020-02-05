@@ -1,3 +1,4 @@
+<?php $AuthDivisionCrud = array(16,12); ?>
 <div id="content">
 	<div class="container">
 		<!-- Breadcrumbs line -->
@@ -52,10 +53,12 @@
 											</div>
 										</div>
 										
-										<div class="form-actions">
-											<button class="btn btn-primary pull-right" id="btn_update">Update</button>
-											<button  class="btn btn-danger pull-right" data-dismiss="modal">Cancel</button>
-										</div>
+										<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+											<div class="form-actions">
+												<button class="btn btn-primary pull-right" id="btn_update">Update</button>
+												<button  class="btn btn-danger pull-right" data-dismiss="modal">Cancel</button>
+											</div>
+										<?php endif ?>
 									</form>
 								</div>
 

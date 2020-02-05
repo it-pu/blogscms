@@ -1,3 +1,4 @@
+<?php $AuthDivisionCrud = array(16,12); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -496,7 +497,7 @@
 							Dashboard
 						</a>
 					</li>
-
+					<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
 					<li class="<?php if($this->uri->segment(1) == 'about' ){echo 'current';} ?>">
 						<a href="<?=  base_url('about')?>">
 							<i class="icon-globe"></i>
@@ -504,6 +505,7 @@
 						</a>
 						
 					</li>
+					<?php endif ?>
 					<li class="<?php if($this->uri->segment(1) == 'content' ){echo 'current open';} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-desktop"></i>
