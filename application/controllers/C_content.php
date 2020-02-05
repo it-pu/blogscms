@@ -32,7 +32,8 @@ class C_content extends MY_Controller {
 
 	public function article()
 	{
-		$content = $this->load->view('V_article','',true);
+        $data['Arr_AS'] =  $this->db->query('select * from db_blogs.set_group where (Active = 1 or ID_set_group = 0) ')->result_array();
+		$content = $this->load->view('V_article',$data,true);
 		parent::template($content);
 	}
 
@@ -124,7 +125,7 @@ class C_content extends MY_Controller {
     function save_article(){
     	date_default_timezone_set('Asia/Jakarta');
         $dataTime = date('Y-m-d H:i:s') ;
-
+        // print_r($this->input->post());die();
     	$this->_validate();
         $data = [
                 // 'ID_title'  => $this->input->post('id_title'), 
@@ -135,6 +136,7 @@ class C_content extends MY_Controller {
                 'Status' => $this->input->post('status'),
                 'CreateAT' => $dataTime,
                 'UpdateBY' => $this->session->userdata('Username'),
+                'ID_set_group' => $this->input->post('ID_set_group'),
             ];
              if(!empty($_FILES['photo']['name']))
 	        {
@@ -168,6 +170,7 @@ class C_content extends MY_Controller {
                 'Status' => $this->input->post('status_edit'),
                 'CreateAT' => $dataTime,
                 'UpdateBY' => $this->session->userdata('Username'),
+                'ID_set_group' => $this->input->post('ID_set_group'),
             );
  
         // if($this->input->post('remove_photo')) // if remove photo checked
@@ -213,8 +216,15 @@ class C_content extends MY_Controller {
     }
 
     function delete_category(){
-        $this->m_article->delete_category();
-        echo json_encode(array("status" => TRUE));     
+        $deleteProcess = $this->m_article->delete_category();
+        if ($deleteProcess == 1) {
+            echo json_encode(array("status" => TRUE));   
+        }
+        else
+        {
+            echo json_encode(array("status" => False,'msg' => 'The data has been using for transaction'));  
+        }
+          
     }
 
     function update_about(){

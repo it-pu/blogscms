@@ -1,3 +1,4 @@
+<?php $AuthDivisionCrud = array(16,12); ?>
 <div id="content">
 	<div class="container">
 		<!-- Breadcrumbs line -->
@@ -141,6 +142,20 @@
 							
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">AS:</label>
+						<div class="col-md-9">
+							<?php $AS = (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)) ? $this->session->userdata('AS') : $Arr_AS  ?>
+							<select class="form-control" name="ID_set_group" id="ID_set_group">
+								<?php for ($i=0; $i < count($AS) ; $i++): ?>
+									<?php $selected = ($AS[$i]['ID_set_group'] == 0) ? 'selected' : '' ?>
+									<option value="<?php echo $AS[$i]['ID_set_group'] ?>"><?php echo $AS[$i]['GroupName'] ?></option>
+								<?php endfor ?>
+							</select>
+							 <span class="help-block"></span>
+							
+						</div>
+					</div>
 					<!-- <div class="form-actions">
 						<button class="btn btn-primary pull-right" id="btn_save"><i class="icon-check"></i> Submit</button>
 					</div> -->
@@ -229,6 +244,21 @@
 								<option value="Draft">Draft</option>
 							</select>
 								
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2 control-label">AS:</label>
+						<div class="col-md-9">
+							<?php $AS = (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)) ? $this->session->userdata('AS') : $Arr_AS  ?>
+							<select class="form-control" name="ID_set_group" id="ID_set_group">
+								<?php for ($i=0; $i < count($AS) ; $i++): ?>
+									<?php $selected = ($AS[$i]['ID_set_group'] == 0) ? 'selected' : '' ?>
+									<option value="<?php echo $AS[$i]['ID_set_group'] ?>"><?php echo $AS[$i]['GroupName'] ?></option>
+								<?php endfor ?>
+							</select>
+							 <span class="help-block"></span>
+							
 						</div>
 					</div>
 					<!-- <div class="form-actions">
@@ -338,7 +368,7 @@
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
                             '<td style="text-align:left;">'+
-                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+data[i].Content+'"  data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'">Edit</a>'+' '+
+                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+data[i].Content+'"  data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" ID_set_group = "'+data[i].ID_set_group+'" >Edit</a>'+' '+
                                 '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_title+'">Delete</a>'+
                             '</td>'+
                             '</tr>';
@@ -358,6 +388,7 @@
 			var url = $(this).data('url');
 			var status = $(this).data('status');
 			var images = $(this).data('images');
+			var ID_set_group = $(this).attr('id_set_group');
 		    //Ajax Load data from ajax
 		    		 		
             $('[name="idtitle_edit"]').val(id);
@@ -367,6 +398,11 @@
             $("#category_edit option").filter(function() {
                //may want to use $.trim in here
                return $(this).val() == category; 
+            }).prop("selected", true);
+            
+            $("#ID_set_group option").filter(function() {
+               //may want to use $.trim in here
+               return $(this).val() == ID_set_group; 
             }).prop("selected", true);
 
             // $('#show_cat_edit_edit').append('<option value="'+category+'" selected>'+category+'</option>');

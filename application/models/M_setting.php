@@ -127,7 +127,11 @@ class M_setting extends CI_Model{
     }
 
     public function checkTransactionData($table,$field,$valueField){
-        $hasil = $this->db->query('select count(*) as total from '.$table.' where '.$field.' = "'.$valueField.'" ')->result_array();
+        $hasil = $this->db->query('select count(*) as total from 
+                                    (
+                                        select 1 from  '.$table.' where '.$field.' = "'.$valueField.'"
+                                    ) cc    
+                                    ')->result_array();
         if ($hasil[0]['total'] == 0) {
             return true;
         }
