@@ -7,7 +7,8 @@
 	<title>Dashboard | Podomoro University</title>
 
 	<!--=== CSS ===-->
-
+	<link href="<?= base_url('assets/img/favicon.png') ?>" rel="icon">
+	<link href="<?= base_url('assets/img/favicon.png') ?>" rel="apple-touch-icon">
 	<!-- Bootstrap -->
 	<link href="<?= base_url('assets/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet" type="text/css" />
 
@@ -31,7 +32,7 @@
 	<!--[if IE 8]>
 		<link href="<?= base_url('assets/css/ie8.css')?>" rel="stylesheet" type="text/css" />
 	<![endif]-->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+	<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'> -->
 	<link href="<?= base_url('assets/plugins/summernote/summernote.css')?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('assets/css/prettify.css')?>" rel="stylesheet" type="text/css" />
 
@@ -82,8 +83,8 @@
 	<script type="text/javascript" src="<?= base_url('assets/plugins/noty/layouts/top.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/noty/themes/default.js')?>"></script>
 	<!-- bootstrap-wysihtml5 -->
-	<script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/wysihtml5.min.js')?>"></script>
-	<script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.min.js')?>"></script>
+	<!-- <script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/wysihtml5.min.js')?>"></script>
+	<script type="text/javascript" src="<?= base_url('assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.min.js')?>"></script> -->
 
 	<!-- Styled radio and checkboxes -->
 	<!-- DataTables -->
@@ -111,8 +112,8 @@
 	<script type="text/javascript" src="<?= base_url('assets/js/app.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/plugins.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/plugins.form-components.js')?>"></script>
-	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-  	<script>tinymce.init({selector:'textarea.default'});</script>
+	<!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  	<script>tinymce.init({selector:'textarea.default'});</script> -->
 
 
 	<script>
@@ -377,7 +378,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<!--<img alt="" src="<?= base_url('assets/img/avatar1_small.jpg')?>" />-->
 						<i class="icon-male"></i>
-						<span class="username">John Doe</span>
+						<span class="username"><?php echo $this->session->userdata('Name') ?></span>
 						<i class="icon-caret-down small"></i>
 					</a>
 					<ul class="dropdown-menu">

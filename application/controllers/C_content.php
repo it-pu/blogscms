@@ -234,11 +234,12 @@ class C_content extends MY_Controller {
         $dataTime = date('Y-m-d H:i:s') ;
         // $this->_validate();
         $data = array(
-                'Title' => $this->input->post('title'), 
+                'Title' => $this->input->post('title'),
                 'Description' => $this->input->post('content'),
                 'CreateAT' => $dataTime,
                 'UpdateBY' => $this->session->userdata('Username'),
             );
+        print_r($data);
         $this->m_article->update_about($data);        
         echo json_encode(array("status" => TRUE));
     }

@@ -48,7 +48,7 @@
 										<div class="form-group">
 											<label class="col-md-2 control-label">Content:</label>
 											<div class="col-md-8">
-												<textarea rows="5" name="content" class="form-control default" ></textarea>
+												<textarea rows="5" id="Description" name="content" class="form-control default" ></textarea>
 											 <span class="help-block"></span>
 											</div>
 										</div>
@@ -88,20 +88,48 @@
 $(document).ready(function() {
 	show_about();
 });
+
+	$('#Description').summernote({
+            placeholder: 'Text your announcement',
+            tabsize: 2,
+            height: 300,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+            callbacks: {
+                  onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
+                    e.preventDefault();
+                    var div = $('<div />');
+                    div.append(bufferText);
+                    div.find('*').removeAttr('style');
+                    setTimeout(function () {
+                      document.execCommand('insertHtml', false, div.html());
+                    }, 10);
+                  }
+                }
+        });
+
 	//function show about
     function show_about(){
-       	var id=$('#idtitle').val();
+       	// var id=$('#idtitle').val();
         $.ajax({
             type  : 'POST',
             url   : base_url_js +'__show_about',
             async: false,
             cache: false,
-            data:{id:id},
+            // data:{id:id},
             dataType : 'json',
             success : function(data){
-                	$('#idtitle').val(data.ID_AboutUS);
+                	// $('#idtitle').val(data.ID_AboutUS);
 		            $('input[name="title"]').val(data.Title);
-		            $('[name="content"]').val(data.Description);
+		            $('[name="content"]').summernote('code',data.Description);
 		            // redirect(base_url());
             },  
             error: function (data)
@@ -118,8 +146,10 @@ $(document).ready(function() {
     		$('#btn_update').attr('disabled',true); //set button disable
 
     		var formData = new FormData($('#form')[0]);
-	       	var content = tinyMCE.get('content');
-
+			formData.append("summernote", $('#Description').text() );
+    		// var formData = new FormData(this);
+    		// formData.append("summernote", $('#Description').text() );
+	       	// var content = tinyMCE.get('content');
             $.ajax({
                 type : "POST",
                 url  : base_url_js +'__update_about',
@@ -127,7 +157,7 @@ $(document).ready(function() {
 				cache: false,             // To unable request pages to be cached
 				processData:false,
                 dataType : "JSON",
-                data : {formData:formData,content:content},
+                data : {formData:formData},
                 success: function(data){
 
 			       	if(data.status) //if success close modal and reload ajax table
@@ -135,6 +165,7 @@ $(document).ready(function() {
 		                $('#btn_update').text('Update'); //change button text
             			$('#btn_update').attr('disabled',false); //set button enable 
             			$('#alert').addClass('active');
+            			$('#alert').focus();
             			$('#alert').removeClass('none');
 		            }
 		            else
