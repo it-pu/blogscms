@@ -6,7 +6,7 @@ class C_content extends MY_Controller {
 	function __construct()
     {
         parent::__construct();
-         // header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: *');
         // header('Content-Type: application/json');
         $this->load->model('m_article');
         $this->load->model('m_setting');

@@ -140,13 +140,13 @@ $(document).ready(function() {
     }
 
 	//function UPDATE about
-    $('#btn_update').on('click',function(){
-
+    $('#btn_update').on('click',function(event){
+    		event.preventDefault();
     		$('#btn_update').text('Update...'); //change button text
     		$('#btn_update').attr('disabled',true); //set button disable
 
     		var formData = new FormData($('#form')[0]);
-			formData.append("summernote", $('#Description').text() );
+			formData.append("summernote", $('#Description').text());
     		// var formData = new FormData(this);
     		// formData.append("summernote", $('#Description').text() );
 	       	// var content = tinyMCE.get('content');
@@ -157,28 +157,30 @@ $(document).ready(function() {
 				cache: false,             // To unable request pages to be cached
 				processData:false,
                 dataType : "JSON",
-                data : {formData:formData},
+                data : formData,
                 success: function(data){
-
+                	
+                	// console.log(data);
 			       	if(data.status) //if success close modal and reload ajax table
 		            {
 		                $('#btn_update').text('Update'); //change button text
             			$('#btn_update').attr('disabled',false); //set button enable 
             			$('#alert').addClass('active');
-            			$('#alert').focus();
-            			$('#alert').removeClass('none');
+	        			$('#alert').removeClass('none');
+	        			show_about();
 		            }
 		            else
 		            {
+		            	
 		                for (var i = 0; i < data.inputerror.length; i++) 
 		                {
 		                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
 		                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
 		                }
 		            }
-			       	$('#btn_update').text('Update'); //change button text
-            		$('#btn_update').prop('disabled',false); //set button enable 
-
+			       	// $('#btn_update').text('Update'); //change button text
+           //  		$('#btn_update').prop('disabled',false); //set button enable 
+           			
 			    },
 			    error: function (data)
 		        {
@@ -188,7 +190,7 @@ $(document).ready(function() {
 		 
 		        }
             });
-            return false;
+            // return false;
         });
 
 

@@ -91,7 +91,8 @@
 	<!-- OLD dari Yamin
 	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/DT_bootstrap.js')?>"></script>
-	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/responsive/datatables.responsive.js')?>"></script> <!-- optional -->
+	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/responsive/datatables.responsive.js')?>"></script> -->
+	<!-- optional -->
 	<!-- OLD dari Yamin -->
 
 	<!--<script type="text/javascript" src="--><!--plugins/datatables/jquery.dataTables.min.js"></script>-->
