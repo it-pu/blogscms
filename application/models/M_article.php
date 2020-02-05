@@ -20,15 +20,35 @@ class M_article extends CI_Model{
         return $str;
     }
 
+    public function getEMPorMHS($whereField = 'a.UpdateBY',$asfield = 'UpdateBY'){
+        $str = 'if( 
+                     (select count(*) as total from db_employees.employees where NIP = '.$whereField.' limit 1 ) = 1,
+                        #True
+                        "Employees",
+                        #False
+                        "Student"  
+                  ) as '.$asfield.' ';
+        return $str;
+    }
+
     // ========== CRUD Article ========== //
 
 	function list_article(){
         // $hasil= $this->db->query('select * from db_blogs.article order by ID_title desc');
+        $Addwhere  = '';
+        $AuthDivisionCrud = array(16,12);
+        if (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)){
+            $WhereOrAnd = ($Addwhere == '') ? ' Where ' : ' And ';
+            $Addwhere = $WhereOrAnd.' a.UpdateBY ="'.$this->session->userdata('Username').'" ';
+        }
 		$hasil= $this->db->query('select a.*,b.Name,
-                                 '.$this->getNameUpdateBY().'
+                                 '.$this->getNameUpdateBY().',c.GroupName
                                  from db_blogs.article  as a
                                  join db_blogs.category as b on a.ID_category =  b.ID_category
+                                 join db_blogs.set_group as c on a.ID_set_group = c.ID_set_group
+                                 '.$Addwhere.'
                                  order by ID_title desc');
+        // print_r($this->db->last_query());die();
 
 		return $hasil->result();
 		
@@ -99,10 +119,19 @@ class M_article extends CI_Model{
     }
 
     function delete_category(){
-       
+       $this->load->model('m_setting');
         $id = $this->input->post('id');
-        $hasil=$this->db->query("DELETE FROM db_blogs.category WHERE ID_category='$id'");
-		return $hasil;
+        // check data transaction
+        $chk = $this->m_setting->checkTransactionData('db_blogs.article','ID_category',$id);
+        if ($chk) {
+            $hasil=$this->db->query("DELETE FROM db_blogs.category WHERE ID_category='$id'");
+            return $hasil;
+        }
+        else
+        {
+            return '';
+        }
+        
     }
 
 

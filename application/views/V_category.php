@@ -1,3 +1,4 @@
+<?php $AuthDivisionCrud = array(16,12) ?>
 <div id="content">
 	<div class="container">
 		<!-- Breadcrumbs line -->
@@ -5,10 +6,10 @@
 			<ul id="breadcrumbs" class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.html">Dashboard</a>
+					<a href="#">Content</a>
 				</li>
 				<li class="current">
-					<a href="pages_calendar.html" title="">Category</a>
+					<a href="<?= base_url('content/category')?>" title="">Category</a>
 				</li>
 			</ul>
 		</div>
@@ -25,6 +26,7 @@
 		<!-- /Page Header -->
 
 		<!--=== Page Content ===-->
+		<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
 		<div class="row">
 			<div class="col-md-12">
 				<dl>
@@ -32,6 +34,7 @@
 				</dl>
 			</div>
 		</div>
+		<?php endif ?>
 
 		<!--=== Responsive DataTable ===-->
 		<div class="row">
@@ -188,6 +191,11 @@
                 var url_category = base_url_js +'edit_category';
                 var i=1;
                 for(i=0; i<data.length; i++){
+                	var btnAction = '';
+                	<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+                		btnAction = '<a href="#modal_edit" id="show_edit_category"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_category+'"  data-title="'+data[i].Name+'">Edit</a>'+' '+
+                                '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_category+'">Delete</a>';
+                	<?php endif ?>
                     html += '<tr>'+
        //              		'<td class="checkbox-column">'+
 							// 		// '<input type="checkbox" class="uniform">'+
@@ -196,8 +204,7 @@
                             '<td>'+data[i].UpdateBY+'</td>'+
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td style="text-align:left;">'+
-                                '<a href="#modal_edit" id="show_edit_category"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_category+'"  data-title="'+data[i].Name+'">Edit</a>'+' '+
-                                '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_category+'">Delete</a>'+
+                                btnAction+
                             '</td>'+
                             '</tr>';
                 }
@@ -245,7 +252,7 @@
 	            			$('#alert').addClass('active');
 	            			$('#alert').removeClass('none');
 	            			$('#myModal').modal('hide');
-	                		show_article();
+	                		show_category();
 			            }
 			            else
 			            {
@@ -351,9 +358,17 @@
             data:{id:id},
             success: function(data)
             {
-                //if success reload ajax table
-                $('#modal_delete').modal('hide');
-                show_category();
+            	console.log(data);
+                if (data.status) {
+                	$('#modal_delete').modal('hide');
+                	show_category();
+                }
+                else
+                {
+                	toastr.error(data.msg);
+                }
+
+                
             },
             error: function (data)
             {

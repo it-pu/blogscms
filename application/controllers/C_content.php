@@ -9,6 +9,7 @@ class C_content extends MY_Controller {
          // header('Access-Control-Allow-Origin: *');
         // header('Content-Type: application/json');
         $this->load->model('m_article');
+        $this->load->model('m_setting');
 	}
 
 	public function dateTimeNow(){
@@ -31,7 +32,8 @@ class C_content extends MY_Controller {
 
 	public function article()
 	{
-		$content = $this->load->view('V_article','',true);
+        $data['Arr_AS'] =  $this->db->query('select * from db_blogs.set_group where (Active = 1 or ID_set_group = 0) ')->result_array();
+		$content = $this->load->view('V_article',$data,true);
 		parent::template($content);
 	}
 
@@ -59,6 +61,11 @@ class C_content extends MY_Controller {
 		$content = $this->load->view('V_contact','',true);
 		parent::template($content);
 	}
+
+    public function setting(){
+        $content = $this->load->view('V_setting','',true);
+        parent::template($content);
+    }
 
 	// ===== CRUD Article ====== //
 	
@@ -118,7 +125,7 @@ class C_content extends MY_Controller {
     function save_article(){
     	date_default_timezone_set('Asia/Jakarta');
         $dataTime = date('Y-m-d H:i:s') ;
-
+        // print_r($this->input->post());die();
     	$this->_validate();
         $data = [
                 // 'ID_title'  => $this->input->post('id_title'), 
@@ -129,6 +136,7 @@ class C_content extends MY_Controller {
                 'Status' => $this->input->post('status'),
                 'CreateAT' => $dataTime,
                 'UpdateBY' => $this->session->userdata('Username'),
+                'ID_set_group' => $this->input->post('ID_set_group'),
             ];
              if(!empty($_FILES['photo']['name']))
 	        {
@@ -162,6 +170,7 @@ class C_content extends MY_Controller {
                 'Status' => $this->input->post('status_edit'),
                 'CreateAT' => $dataTime,
                 'UpdateBY' => $this->session->userdata('Username'),
+                'ID_set_group' => $this->input->post('ID_set_group'),
             );
  
         // if($this->input->post('remove_photo')) // if remove photo checked
@@ -207,8 +216,15 @@ class C_content extends MY_Controller {
     }
 
     function delete_category(){
-        $this->m_article->delete_category();
-        echo json_encode(array("status" => TRUE));     
+        $deleteProcess = $this->m_article->delete_category();
+        if ($deleteProcess == 1) {
+            echo json_encode(array("status" => TRUE));   
+        }
+        else
+        {
+            echo json_encode(array("status" => False,'msg' => 'The data has been using for transaction'));  
+        }
+          
     }
 
     function update_about(){
@@ -354,6 +370,135 @@ class C_content extends MY_Controller {
             echo json_encode($data);
             exit();
         }
+    }
+
+    function data_setting_group(){
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        $Input = $this->getInputToken();
+        $action = $Input['action'];
+        $rs = [];
+        switch ($action) {
+            case 'LoadData':
+                $rs = $this->m_setting->Group_LoadData();
+                break;
+            case 'datatables':
+                $rs = $this->m_setting->Group_LoadData_datatables();
+                break;
+            case 'add' : 
+                $data = $Input['data'];
+                $this->db->insert('db_blogs.set_group',$data);
+                $rs = ['status' => 1,'msg' => ''];
+            case 'edit' :
+                $ID = $Input['ID']; 
+                $data = $Input['data'];
+                $this->db->where('ID_set_group',$ID);
+                $this->db->update('db_blogs.set_group',$data);
+                $rs = ['status' => 1,'msg' => ''];
+                break;
+            case 'delete' :
+                $ID = $Input['ID'];
+                // check data telah di gunakan atau belum
+                // $chk =  $this->m_setting->checkTransactionData('db_blogs.set_list_member','ID_set_group',$ID);
+                // if ($chk) {
+                //     $this->db->where('ID_set_group',$ID);
+                //     $this->db->delete('db_blogs.set_group');
+                //     $rs = ['status' => 1,'msg' => ''];
+                // }
+                // else
+                // {
+                //     $rs = ['status' => 0,'msg' => 'The data has been using for transaction'];
+                // }
+                $data = $Input['data'];
+                $this->db->where('ID_set_group',$ID);
+                $this->db->update('db_blogs.set_group',['Active' => 0 ] );
+                $rs = ['status' => 1,'msg' => ''];
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        echo json_encode($rs);
+    }
+
+    function data_setting_member(){
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        $Input = $this->getInputToken();
+        $action = $Input['action'];
+        $rs = [];
+        switch ($action) {
+            case 'LoadData':
+                $rs = $this->m_setting->member_LoadData();
+                break;
+            case 'datatables' :
+                $rs = $this->m_setting->member_LoadData_datatables();
+                break;
+            case 'add' : 
+                $data = $Input['data'];
+                $this->db->insert('db_blogs.set_member',$data);
+                $rs = ['status' => 1,'msg' => ''];
+            case 'edit' :
+                $ID = $Input['ID']; 
+                $data = $Input['data'];
+                $this->db->where('ID_set_member',$ID);
+                $this->db->update('db_blogs.set_member',$data);
+                $rs = ['status' => 1,'msg' => ''];
+                break;
+            case 'delete' :
+                $ID = $Input['ID'];
+                $data = $Input['data'];
+                $this->db->where('ID_set_member',$ID);
+                $this->db->update('db_blogs.set_member',['Active' => 0 ] );
+                $rs = ['status' => 1,'msg' => ''];
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        echo json_encode($rs);
+    }
+
+    function data_setting_listmember(){
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        $Input = $this->getInputToken();
+        $Input = json_decode(json_encode($Input),true);
+        $action = $Input['action'];
+        $rs = [];
+        switch ($action) {
+            case 'datatables':
+                $rs = $this->m_setting->listmember_datatables($Input);
+                break;
+            case 'add' : 
+                $data = $Input['data'];
+                $data['UpdateBY'] = $this->session->userdata('Username');
+                $data['UpdateAT'] = date('Y-m-d H:i:s');
+                $this->db->insert('db_blogs.set_list_member',$data);
+                $rs = ['status' => 1,'msg' => ''];
+            case 'edit' :
+                $ID = $Input['ID']; 
+                $data = $Input['data'];
+                $data['UpdateBY'] = $this->session->userdata('Username');
+                $data['UpdateAT'] = date('Y-m-d H:i:s');
+                $this->db->where('ID_set_list_member',$ID);
+                $this->db->update('db_blogs.set_list_member',$data);
+                $rs = ['status' => 1,'msg' => ''];
+                break;
+            case 'delete' :
+                $ID = $Input['ID']; 
+                $this->db->where('ID_set_list_member',$ID);
+                $this->db->delete('db_blogs.set_list_member');
+                $rs = ['status' => 1,'msg' => ''];
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        echo json_encode($rs);
     }
 
     /// ============= ==============  ///

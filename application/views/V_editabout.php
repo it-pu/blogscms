@@ -5,10 +5,7 @@
 			<ul id="breadcrumbs" class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="<?= base_url()?>">Dashboard</a>
-				</li>
-				<li class="current">
-					<a href="" title="">About</a>
+					<a href="<?=  base_url('about')?>">About</a>
 				</li>
 			</ul>
 

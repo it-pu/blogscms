@@ -5,10 +5,7 @@
 			<ul id="breadcrumbs" class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.html">Dashboard</a>
-				</li>
-				<li class="current">
-					<a href="pages_calendar.html" title="">Contact</a>
+					<a href="<?=  base_url('contact')?>" title="">Contact</a>
 				</li>
 			</ul>
 		</div>
