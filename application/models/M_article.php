@@ -47,12 +47,26 @@ class M_article extends CI_Model{
                                  join db_blogs.category as b on a.ID_category =  b.ID_category
                                  join db_blogs.set_group as c on a.ID_set_group = c.ID_set_group
                                  '.$Addwhere.'
-                                 order by ID_title desc');
+                                 order by ID_title desc')->result_array();
         // print_r($this->db->last_query());die();
 
-		return $hasil->result();
+        for ($i=0; $i < count($hasil); $i++) { 
+            $ID_title = $hasil[$i]['ID_title'];
+            $hasil[$i]['show_topic'] = $this->getTopicArticle($ID_title);
+        }
+
+		return $hasil;
 		
 	}
+
+    public function getTopicArticle($ID_article){
+        $sql = 'select a.*,b.Name_topic,b.CreateAT,b.UpdateBY 
+                from db_blogs.show_topic as a join db_blogs.topic as b on a.ID_topic = b.ID_topic
+                where a.ID_article = '.$ID_article.'
+                 ';
+        $query = $this->db->query($sql)->result_array();
+        return $query;
+    }
 
 	function list_contact(){
 		$hasil= $this->db->query('select * from db_blogs.contact order by ID_contact desc');

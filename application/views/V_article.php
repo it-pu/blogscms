@@ -30,6 +30,9 @@
 			<div class="col-md-12">
 				<dl>
 					<a data-toggle="modal" href="#myModal"><button class="btn btn-primary"><i class="icon-plus"></i> New Article</button></a>
+					<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+					<button class="btn btn-success btnSubmitTopic"> Submit</button>
+					<?php endif ?>
 				</dl>
 			</div>
 		</div>
@@ -53,7 +56,7 @@
 									<!-- <th class="checkbox-column">
 										<input type="checkbox" class="uniform">
 									</th> -->
-									<th data-class="expand">Title</th>
+									<th data-class="expand"  style="width:32%;">Title</th>
 									<th>Author</th>
 									<th data-hide="phone">Create Date</th>
 									<th data-hide="phone,tablet">Status</th>
@@ -348,6 +351,42 @@
 
 	// ===== View List Data ==== //
 	//function show all article
+
+	function show_op_topic(dt){
+		var Arr_Topic = <?php echo $Arr_Topic ?>;
+		var html = '<select class = "form-control opTopic">';
+		var bool = false;
+		var ID_topicSelected = '';
+		if (dt.length > 0) {
+			for (var i = 0; i < Arr_Topic.length; i++) {
+				var ID_topic = Arr_Topic[i].ID_topic;
+				for (var j = 0; j < dt.length; j++) {
+					if (ID_topic == dt[j].ID_topic) {
+						ID_topicSelected = ID_topic;
+						bool = true;
+						break;
+					}
+				}
+
+			}
+		}
+
+		for (var i = -1; i < Arr_Topic.length; i++) {
+			if (i==-1) {
+				var selected = (!bool) ? 'selected' : '';
+				html += '<option value = "" '+selected+' >--None--</option>';
+			}
+			else
+			{
+				var selected = (Arr_Topic[i].ID_topic == ID_topicSelected) ? 'selected' : '';
+				html += '<option value = "'+Arr_Topic[i].ID_topic+'" '+selected+' >'+Arr_Topic[i].Name_topic+'</option>';
+			}
+		}
+
+		html += '</select>';
+		return html;
+	}
+
     function show_article(){
         $.ajax({
             type  : 'ajax',
@@ -359,11 +398,18 @@
                 var i;
                 var url_article = base_url_js +'edit_article';
                 for(i=0; i<data.length; i++){
-                    html += '<tr>'+
+                	var show_topic = data[i].show_topic;
+                	var OPhtmlTopic = show_op_topic(show_topic);
+                	var tdTitle = data[i].Title;
+                	<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+                		tdTitle = '<div class ="col-md-4">'+OPhtmlTopic+'</div><div class="col-md-8>">'+data[i].Title+'</div>';
+                	<?php endif ?>
+                    html += '<tr idtitle = "'+data[i].ID_title+'">'+
        //              		'<td class="checkbox-column">'+
 							// 		'<input type="checkbox" class="uniform">'+
 							// '</td>'+
-                            '<td>'+data[i].Title+'</td>'+
+
+                            '<td>'+tdTitle+'</td>'+
                             '<td>'+data[i].UpdateBY+' As '+data[i].GroupName+'</td>'+
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
@@ -585,5 +631,44 @@
         });
 	 	return false;
 	});
-	 
+
+    $(document).off('click', '.btnSubmitTopic').on('click', '.btnSubmitTopic',function(e) {
+    	var selectorbtn = $(this);
+    	var arr = [];
+    	$('.opTopic').each(function(e){
+    		var v = $(this).find('option:selected').val();
+    		var idtitle = $(this).closest('tr').attr('idtitle');
+    		if (v != '') {
+    			var temp = {
+    				ID_article : idtitle,
+    				ID_topic : v,
+    			}
+
+    			arr.push(temp);
+    		}
+    		
+    	})
+    	if (confirm('Are you sure ? ')) {
+    		loading_button2(selectorbtn);
+    		var url = base_url_js+"__show_topic";
+    		var token = jwt_encode(arr,'UAP)(*');
+    		AjaxSubmit(url,token).then(function(response){
+    		    if (response.status == 1) {
+    		    	show_article();
+    		    }
+    		    else
+    		    {
+    		        toastr.error(response.msg);
+    		        end_loading_button2(selectorbtn,'Submit');
+    		    }
+    		     end_loading_button2(selectorbtn,'Submit');
+    		}).fail(function(response){
+    		   toastr.error('Connection error,please try again');
+    		   end_loading_button2(selectorbtn,'Submit');     
+    		})
+    	}
+
+    })
+	
+
 </script>
