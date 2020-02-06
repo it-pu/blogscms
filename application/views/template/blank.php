@@ -91,7 +91,8 @@
 	<!-- OLD dari Yamin
 	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/DT_bootstrap.js')?>"></script>
-	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/responsive/datatables.responsive.js')?>"></script> <!-- optional -->
+	<script type="text/javascript" src="<?= base_url('assets/plugins/datatables/responsive/datatables.responsive.js')?>"></script> -->
+	<!-- optional -->
 	<!-- OLD dari Yamin -->
 
 	<!--<script type="text/javascript" src="--><!--plugins/datatables/jquery.dataTables.min.js"></script>-->
@@ -165,7 +166,7 @@
 			</ul>
 
 			<!-- Logo -->
-			<a class="navbar-brand" href="index.html">
+			<a class="navbar-brand" href="<?= base_url('dashboard')?>">
 				<img src="<?= base_url('assets/img/logo-header-hitam-putih.png')?>" alt="logo" style="width: 150px;   padding: 5px;"/>
 			</a>
 			<!-- /logo -->
@@ -179,12 +180,12 @@
 			<!-- Top Left Menu -->
 			<ul class="nav navbar-nav navbar-left hidden-xs hidden-sm">
 				<li>
-					<a href="#">
+					<a href="<?= base_url('dashboard')?>">
 						Dashboard
 					</a>
 				</li>
 				<li>
-					<a href="http://localhost/blogs" target="_blink">
+					<a href="https://blogs.podomorouniversity.ac.id/" target="_blink">
 						Preview Live
 						<i class="icon-external-link"></i>
 					</a>
@@ -382,10 +383,10 @@
 						<i class="icon-caret-down small"></i>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="pages_user_profile.html"><i class="icon-user"></i> My Profile</a></li>
+						<!-- <li><a href="pages_user_profile.html"><i class="icon-user"></i> My Profile</a></li>
 						<li><a href="pages_calendar.html"><i class="icon-calendar"></i> My Calendar</a></li>
-						<li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
-						<li class="divider"></li>
+						<li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li> -->
+						<!-- <li class="divider"></li> -->
 						<li><a href="<?php echo base_url().'logout' ?>"><i class="icon-key"></i> Log Out</a></li>
 					</ul>
 				</li>
@@ -396,7 +397,7 @@
 		<!-- /top navigation bar -->
 
 		<!--=== Project Switcher ===-->
-		<div id="project-switcher" class="container project-switcher">
+		<!-- <div id="project-switcher" class="container project-switcher">
 			<div id="scrollbar">
 				<div class="handle"></div>
 			</div>
@@ -477,7 +478,7 @@
 					</li>
 				</ul>
 			</div> 
-		</div> 
+		</div>  -->
 		<!-- /#project-switcher -->
 	</header> <!-- /.header -->
 
@@ -493,7 +494,7 @@
 				<!--=== Navigation ===-->
 				<ul id="nav">
 					<li class="<?php if($this->uri->segment(1) == 'dashboard' ){echo 'current';} ?>">
-						<a href="#">
+						<a href="<?=  base_url('dashboard')?>">
 							<i class="icon-dashboard"></i>
 							Dashboard
 						</a>
