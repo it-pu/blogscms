@@ -46,9 +46,9 @@
 						<table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
 							<thead>
 								<tr>
-									<th class="checkbox-column">
+									<!-- <th class="checkbox-column">
 										<input type="checkbox" class="uniform">
-									</th>
+									</th> -->
 									<th data-class="expand">Name</th>
 									<th>Email</th>
 									<th data-hide="phone">Message</th>
@@ -90,9 +90,9 @@
                 // var url_contact = base_url_js +'edit_contact';
                 for(i=0; i<data.length; i++){
                     html += '<tr>'+
-                    		'<td class="checkbox-column">'+
-									'<input type="checkbox" class="uniform">'+
-							'</td>'+
+       //              		'<td class="checkbox-column">'+
+							// 		'<input type="checkbox" class="uniform">'+
+							// '</td>'+
                             '<td>'+data[i].Name+'</td>'+
                             '<td>'+data[i].Email+'</td>'+
                             '<td>'+data[i].Message+'</td>'+
