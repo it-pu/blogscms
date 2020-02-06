@@ -8,7 +8,7 @@
 					<a href="#">Dashboard</a>
 				</li>
 				<li class="current">
-					<a href="pages_calendar.html" title="">Dashboard</a>
+					<a href="#!" title="">Dashboard</a>
 				</li>
 			</ul>
 
