@@ -239,7 +239,7 @@ class C_content extends MY_Controller {
                 'CreateAT' => $dataTime,
                 'UpdateBY' => $this->session->userdata('Username'),
             );
-        print_r($data);
+        // print_r($this->input->post());
         $this->m_article->update_about($data);        
         echo json_encode(array("status" => TRUE));
     }
