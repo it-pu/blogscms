@@ -30,9 +30,9 @@
 			<div class="col-md-12">
 				<dl>
 					<a data-toggle="modal" href="#myModal"><button class="btn btn-primary"><i class="icon-plus"></i> New Article</button></a>
-					<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
-					<button class="btn btn-success btnSubmitTopic"> Submit</button>
-					<?php endif ?>
+					<!-- <?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+					<button class="btn btn-success btnSubmitTopic"> Submit Topic</button>
+					<?php endif ?> -->
 				</dl>
 			</div>
 		</div>
@@ -53,9 +53,11 @@
 						<table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
 							<thead>
 								<tr>
-									<!-- <th class="checkbox-column">
-										<input type="checkbox" class="uniform">
-									</th> -->
+									<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+									<th class="">
+										Show Topic
+									</th>
+									<?php endif ?>
 									<th data-class="expand"  style="width:32%;">Title</th>
 									<th>Author</th>
 									<th data-hide="phone">Create Date</th>
@@ -402,13 +404,12 @@
                 	var OPhtmlTopic = show_op_topic(show_topic);
                 	var tdTitle = data[i].Title;
                 	<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
-                		tdTitle = '<div class ="col-md-4">'+OPhtmlTopic+'</div><div class="col-md-8>">'+data[i].Title+'</div>';
+                		tdtopic = '<td><div class ="col-md-12 btnSubmitTopic">'+OPhtmlTopic+'</div></td>';
+                		tdTitle = '<div class="col-md-8>">'+data[i].Title+'</div>';
                 	<?php endif ?>
                     html += '<tr idtitle = "'+data[i].ID_title+'">'+
-       //              		'<td class="checkbox-column">'+
-							// 		'<input type="checkbox" class="uniform">'+
-							// '</td>'+
 
+                    		'<td">'+tdtopic+'</td>'+
                             '<td>'+tdTitle+'</td>'+
                             '<td>'+data[i].UpdateBY+' As '+data[i].GroupName+'</td>'+
                             '<td>'+data[i].CreateAT+'</td>'+
@@ -632,7 +633,7 @@
 	 	return false;
 	});
 
-    $(document).off('click', '.btnSubmitTopic').on('click', '.btnSubmitTopic',function(e) {
+    $(document).off('change', '.btnSubmitTopic').on('change', '.btnSubmitTopic',function(e) {
     	var selectorbtn = $(this);
     	var arr = [];
     	$('.opTopic').each(function(e){
@@ -655,6 +656,7 @@
     		AjaxSubmit(url,token).then(function(response){
     		    if (response.status == 1) {
     		    	show_article();
+    		    	toastr.success('Success');
     		    }
     		    else
     		    {

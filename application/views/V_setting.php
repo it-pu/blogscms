@@ -124,7 +124,7 @@
 				    </div>
 				    <div class="widget-content">
 				    	<div class="row">
-				    		<div class="col-md-4 col-md-offset-4">
+				    		<div class="col-md-6 col-md-offset-3">
 				    			<div class="well">
 				    				<div class="row">
 				    					<div class="col-md-6">

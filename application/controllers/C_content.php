@@ -139,7 +139,7 @@ class C_content extends MY_Controller {
                 'UpdateBY' => $this->session->userdata('Username'),
                 'ID_set_group' => $this->input->post('ID_set_group'),
             ];
-             if(!empty($_FILES['photo']['name']))
+            if(!empty($_FILES['photo']['name']))
 	        {
 	            $upload = $this->_do_upload();
 	            $data['Images'] = $upload;
@@ -244,32 +244,32 @@ class C_content extends MY_Controller {
         echo json_encode(array("status" => TRUE));
     }
     // ======== Summernote Image ======== //
-    //Upload image summernote
-	function upload_image(){
-		if(isset($_FILES["image"]["name"])){
-			$config['upload_path'] = './assets/upload/';
-			$config['allowed_types'] = 'jpg|jpeg|png|gif';
-			$this->upload->initialize($config);
-			if(!$this->upload->do_upload('image')){
-				$this->upload->display_errors();
-				return FALSE;
-			}else{
-				$data = $this->upload->data();
-		        //Compress Image
-		        $config['image_library']='gd2';
-		        $config['source_image']='./assets/upload/'.$data['file_name'];
-		        $config['create_thumb']= FALSE;
-	            $config['maintain_ratio']= TRUE;
-	            $config['quality']= '60%';
-	            $config['width']= 1180;
-	            $config['height']= 660;
-	            $config['new_image']= './assets/upload/'.$data['file_name'];
-	            $this->load->library('image_lib', $config);
-	            $this->image_lib->resize();
-				echo base_url().'assets/upload/'.$data['file_name'];
-			}
-		}
-	}
+ //    //Upload image summernote
+	// function upload_image(){
+	// 	if(isset($_FILES["image"]["name"])){
+	// 		$config['upload_path'] = './assets/upload/';
+	// 		$config['allowed_types'] = 'jpg|jpeg|png|gif';
+	// 		$this->upload->initialize($config);
+	// 		if(!$this->upload->do_upload('image')){
+	// 			$this->upload->display_errors();
+	// 			return FALSE;
+	// 		}else{
+	// 			$data = $this->upload->data();
+	// 	        //Compress Image
+	// 	        $config['image_library']='gd2';
+	// 	        $config['source_image']='./assets/upload/'.$data['file_name'];
+	// 	        $config['create_thumb']= FALSE;
+	//             $config['maintain_ratio']= TRUE;
+	//             $config['quality']= '60%';
+	//             $config['width']= 1180;
+	//             $config['height']= 660;
+	//             $config['new_image']= './assets/upload/'.$data['file_name'];
+	//             $this->load->library('image_lib', $config);
+	//             $this->image_lib->resize();
+	// 			echo base_url().'assets/upload/'.$data['file_name'];
+	// 		}
+	// 	}
+	// }
 
 	//Delete image summernote
 	function delete_image(){
@@ -302,10 +302,13 @@ class C_content extends MY_Controller {
             $config['image_library']='gd2';
             $config['source_image']='./upload/'.$data['file_name'];
             $config['create_thumb']= FALSE;
-            $config['maintain_ratio']= TRUE; // Ratio menyesuaikan  //false mengikutin height ratio
-            $config['quality']= '70%';
+            $config['maintain_ratio']= false; // Ratio menyesuaikan  //false mengikutin height ratio
+            $config['quality']= '100%';
             $config['width']= 1082;
             $config['height']= 609;
+            // $config["image_sizes"]["rectangle"] = array(600, 400);
+            // $config['x_axis'] = 500; //left->crop
+            // $config['y_axis'] = 500; //top crop
             $config['new_image']= './upload/'.$data['file_name'];
             $this->load->library('image_lib', $config);
             $this->image_lib->initialize($config);
