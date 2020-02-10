@@ -403,14 +403,20 @@
                 	var show_topic = data[i].show_topic;
                 	var OPhtmlTopic = show_op_topic(show_topic);
                 	var tdTitle = data[i].Title;
-                	<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
-                		tdtopic = '<td><div class ="col-md-12 btnSubmitTopic">'+OPhtmlTopic+'</div></td>';
-                		tdTitle = '<div class="col-md-8>">'+data[i].Title+'</div>';
-                	<?php endif ?>
-                    html += '<tr idtitle = "'+data[i].ID_title+'">'+
+                	// <?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+                	// 	tdtopic = '<td><div class ="col-md-12 btnSubmitTopic">'+OPhtmlTopic+'</div></td>';
+                	// 	// tdTitle = '<div class="col-md-8>">'+data[i].Title+'</div>';
+                	// <?php endif ?>
 
-                    		'<td">'+tdtopic+'</td>'+
-                            '<td>'+tdTitle+'</td>'+
+                    html += '<tr idtitle = "'+data[i].ID_title+'">';
+
+						<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+
+                    html +=	'<td><div class ="col-md-12 btnSubmitTopic">'+OPhtmlTopic+'</div></td>';
+
+						<?php endif ?>                       
+
+                    html += '<td>'+data[i].Title+'</td>'+
                             '<td>'+data[i].UpdateBY+' As '+data[i].GroupName+'</td>'+
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
