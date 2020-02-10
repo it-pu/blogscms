@@ -286,7 +286,7 @@ class C_content extends MY_Controller {
     private function _do_upload()
     {
         $config['upload_path']          = 'upload/';
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'jpeg|jpg|png';
         $config['encrypt_name'] = TRUE;
         // $config['max_size']             = 100; //set max size allowed in Kilobyte
         // $config['max_width']            = 83; // set max width image allowed
@@ -304,8 +304,8 @@ class C_content extends MY_Controller {
             $config['create_thumb']= FALSE;
             $config['maintain_ratio']= false; // Ratio menyesuaikan  //false mengikutin height ratio
             $config['quality']= '100%';
-            $config['width']= 1082;
-            $config['height']= 609;
+            $config['width']= 1000;
+            $config['height']= 600;
             // $config["image_sizes"]["rectangle"] = array(600, 400);
             // $config['x_axis'] = 500; //left->crop
             // $config['y_axis'] = 500; //top crop
@@ -317,8 +317,9 @@ class C_content extends MY_Controller {
 
         }else{
 
+            $data['error_string'][] = 'Upload error: '.$this->upload->display_errors('','');
             $data['inputerror'][] = 'photo';
-            $data['error_string'][] = 'Upload error: '.$this->upload->display_errors('',''); //show ajax error
+             //show ajax error
             $data['status'] = FALSE;
             echo json_encode($data);
             exit();
@@ -354,11 +355,16 @@ class C_content extends MY_Controller {
             $data['error_string'][] = 'Content is required';
             $data['status'] = FALSE;
         }
- 
-        // if($this->input->post('url') == '')
+        // if (($_FILES['photo']['name'])=='')
         // {
-        //     $data['inputerror'][] = 'url';
-        //     $data['error_string'][] = 'Url is required';
+        //     $data['inputerror'][] = 'photo';
+        //     $data['error_string'][] = 'Photo is required';
+        //     $data['status'] = FALSE;
+        // } 
+        // if($this->input->post('photo') == '')
+        // {
+        //     $data['inputerror'][] = 'photo';
+        //     $data['error_string'][] = 'photo is required';
         //     $data['status'] = FALSE;
         //     // Do anything for not being valid          
         // }
@@ -370,6 +376,13 @@ class C_content extends MY_Controller {
             $data['status'] = FALSE;
         }
  
+        if (($_FILES['photo']['name'])=='')
+        {
+            $data['inputerror'][] = 'photo';
+            $data['error_string'][] = 'Photo is required';
+            $data['status'] = FALSE;
+        } 
+
         if($data['status'] === FALSE)
         {
             echo json_encode($data);
