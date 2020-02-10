@@ -116,9 +116,10 @@
 						<label class="col-md-2 control-label">Images Upload:</label>
 						<div class="col-md-9">
 
-							<input type="file" name="photo" class="required" accept="image/*" data-style="fileinput" data-inputsize="medium">
-							<p class="help-block">Images only (image/*)</p>
-							<label for="photo" class="has-error help-block" generated="true" style="display:none;"></label>
+							<input type="file" name="photo" class="required" accept="image/*" data-style="fileinput" data-inputsize="medium" >
+							<p class="help-block">Images only (image/jpg/jpeg/png*) and 1000px width X 600px height</p>
+							<span for="photo" class="error help-block" id="error" generated="true" ></span>
+							<!-- <span class="help-block"></span> -->
 						</div>
 					</div>
 					<!-- <div class="form-group">
@@ -223,9 +224,8 @@
 						<div class="col-md-9">
 
 							<input type="file" name="photo" id="photo_edit"  accept="image/*" data-style="fileinput" data-inputsize="medium">
-							<p class="help-block">Images only (image/*)</p>
-							<label for="photo" class="has-error help-block" generated="true" style="display:none;"></label>
-							<span class="help-block"></span>
+							<p class="help-block">Images only (image/jpg/jpeg/png*) and 1000px width X 600px height</p>
+							<div for="photo" class="error help-block" id="error-edit" generated="true" ></div>
 						</div>
 					</div>
 					<!-- <div class="form-group">
@@ -403,14 +403,20 @@
                 	var show_topic = data[i].show_topic;
                 	var OPhtmlTopic = show_op_topic(show_topic);
                 	var tdTitle = data[i].Title;
-                	<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
-                		tdtopic = '<td><div class ="col-md-12 btnSubmitTopic">'+OPhtmlTopic+'</div></td>';
-                		tdTitle = '<div class="col-md-8>">'+data[i].Title+'</div>';
-                	<?php endif ?>
-                    html += '<tr idtitle = "'+data[i].ID_title+'">'+
+                	// <?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+                	// 	tdtopic = '<td><div class ="col-md-12 btnSubmitTopic">'+OPhtmlTopic+'</div></td>';
+                	// 	// tdTitle = '<div class="col-md-8>">'+data[i].Title+'</div>';
+                	// <?php endif ?>
 
-                    		'<td">'+tdtopic+'</td>'+
-                            '<td>'+tdTitle+'</td>'+
+                    html += '<tr idtitle = "'+data[i].ID_title+'">';
+
+						<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+
+                    html +=	'<td><div class ="col-md-12 btnSubmitTopic">'+OPhtmlTopic+'</div></td>';
+
+						<?php endif ?>                       
+
+                    html += '<td>'+data[i].Title+'</td>'+
                             '<td>'+data[i].UpdateBY+' As '+data[i].GroupName+'</td>'+
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
@@ -499,7 +505,7 @@
                 dataType : "JSON",
                 data : formData,
                 success: function(data){
-                    
+                  
 			       if(data.status) //if success close modal and reload ajax table
 		            {
 		                $('#btn_save').text('save'); //change button text
@@ -510,17 +516,20 @@
             			$('#alert').removeClass('none');
             			$('#myModal').modal('hide');
                 		show_article();
-
+                		location.reload(); 
 		            }
 		            else
 		            {
+
 		                for (var i = 0; i < data.inputerror.length; i++) 
 		                {
 		                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
 		                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
-		                    
+		                    $('#error').text(data.error_string[i]);  
 		                }
+
 		            }
+		            // $('.error').text(data.error_string[i]);	
 			       	$('#btn_save').text('save'); //change button text
             		$('#btn_save').prop('disabled',false); //set button enable 
 
@@ -562,6 +571,7 @@
 		            {
             			$('#alert1').addClass('active');
             			$('#alert1').removeClass('none');
+            			$('#error').removeClass('error');
             			setTimeout(function(){ 
 				                $('#btn_update').text('Save'); //change button text
 		            			$('#btn_update').attr('disabled',false); //set button enable 
@@ -582,14 +592,16 @@
 		                {
 		                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
 		                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+		                    $('#error-edit').text(data.error_string[i]);
 		                }
+
 		                $('#alert1').addClass('active');
             			$('#alert1').removeClass('none');
 
 				       	$('#btn_update').text('Save'); //change button text
 	            		$('#btn_update').prop('disabled',false); //set button enable 
 		            }
-
+		            $('#error').removeClass('error');
 			    },
 			    error: function (data)
 		        {
