@@ -143,14 +143,22 @@
             
             define("path_register_online","C:/nginx/html/registeronline/", true);
             define('ENVIRONMENT', 'development',true);
-			break;		
+			break;	
+		case 'blogs.podomorouniversity.ac.id'://name domain
+			define("url_blog",$HostPath."blogs.podomorouniversity.ac.id/", true);
+			define("url_blog_admin",$HostPath."adminblogs.podomorouniversity.ac.id/", true);
+			define('ENVIRONMENT', 'development',true);
+			break;	
 		default:
             $port_user = ($_SERVER['SERVER_PORT']!='80') ? ':'.$_SERVER['SERVER_PORT'] : '';
             $folder_user = ($_SERVER['SERVER_PORT']!='80') ? 'siak3' : 'puis';
             $portal_user = ($_SERVER['SERVER_PORT']!='80') ? 'login3' : 'portal';
             define("port",$port_user, true);
 
-            // Local Nandang
+            // Local yamin
+            define("url_blog","http://localhost/blogs/", true);
+			define("url_blog_admin","http://localhost/blog_cms/", true);
+			 // Local Nandang
             define("url_registration",$HostPath."localhost/registeronline/", true);
             define("serverRoot",$HostPath."localhost".port."/".$folder_user, true);
             define("url_pas",$HostPath."localhost".port."/".$folder_user."/", true);

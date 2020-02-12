@@ -66,7 +66,7 @@
 									
 									<div class="col-md-12 ">
 										<div class="embed-responsive">
-											<iframe class="embed-responsive-item" src="http://localhost/blogs/about" width="100%" height="600"></iframe>
+											<iframe class="embed-responsive-item" src="<?= url_blog?>about" width="100%" height="600"></iframe>
 										</div>
 									</div>
 									
