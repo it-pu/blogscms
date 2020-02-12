@@ -288,6 +288,13 @@ class C_content extends MY_Controller {
         $config['upload_path']          = 'upload/';
         $config['allowed_types']        = 'jpeg|jpg|png';
         $config['encrypt_name'] = TRUE;
+        $config['maintain_ratio']= false; // Ratio menyesuaikan  //false mengikutin height ratio
+        $config['quality']= '100%';
+        $config['max_size'] = '2048'; //2MB
+        $config['width']= 1000;
+        $config['height']= 600;
+        $config['create_thumb']= FALSE;
+        
         // $config['max_size']             = 100; //set max size allowed in Kilobyte
         // $config['max_width']            = 83; // set max width image allowed
         // $config['max_height']           = 83; // set max height allowed
@@ -301,11 +308,7 @@ class C_content extends MY_Controller {
             //Resize and Compress Image
             $config['image_library']='gd2';
             $config['source_image']='./upload/'.$data['file_name'];
-            $config['create_thumb']= FALSE;
-            $config['maintain_ratio']= false; // Ratio menyesuaikan  //false mengikutin height ratio
-            $config['quality']= '100%';
-            $config['width']= 1000;
-            $config['height']= 600;
+                        
             // $config["image_sizes"]["rectangle"] = array(600, 400);
             // $config['x_axis'] = 500; //left->crop
             // $config['y_axis'] = 500; //top crop

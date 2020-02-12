@@ -117,7 +117,8 @@
 						<div class="col-md-9">
 
 							<input type="file" name="photo" class="required" accept="image/*" data-style="fileinput" data-inputsize="medium" >
-							<p class="help-block">Images only (image/jpg/jpeg/png*) and 1000px width X 600px height</p>
+							<p class="help-block">* Max size 2MB</p>
+							<p class="help-block">* Images only (image/jpg/jpeg/png*) and 1000px width X 600px height</p>
 							<span for="photo" class="error help-block" id="error" generated="true" ></span>
 							<!-- <span class="help-block"></span> -->
 						</div>
