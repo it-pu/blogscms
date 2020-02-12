@@ -92,7 +92,8 @@ class M_login extends CI_Model{
     			// usernya MHS
 				$dataMhs = $this->db->get_where('db_academic.auth_students',
 		                    array(
-		                    	'NPM' => $input['Username']  ))->result_array();
+		                    	'NPM' => $input['Username'],
+                                'Password' => (array_key_exists('password_encryption', $input)) ? $input['password_encryption']: $this->genratePassword($input['Username'],$input['Password'])))->result_array();
 
 				if (count($dataMhs) > 0) {
                     $AS = $this->AsMemberList($input['Username']);
