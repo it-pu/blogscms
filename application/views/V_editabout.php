@@ -65,8 +65,8 @@
 								<div class="tab-pane" id="tab_1_2">
 									
 									<div class="col-md-12 ">
+
 										<div class="embed-responsive" id="frame-priview">
-											<!-- <iframe class="embed-responsive-item" src="<?= url_blog?>/about" width="100%" height="600"></iframe> -->
 										</div>
 									</div>
 									
