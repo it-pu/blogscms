@@ -529,7 +529,7 @@
 							</li>
 						</ul>
 					</li>
-
+					<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
 					<li class="<?php if($this->uri->segment(1) == 'contact' ){echo 'open';} ?>">
 						<a href="<?= base_url('contact')?>">
 							<i class="icon-book"></i>
@@ -537,6 +537,7 @@
 						</a>
 						
 					</li>
+					<?php endif ?>
 					<!-- <li>
 						<a href="javascript:void(0);">
 							<i class="icon-user"></i>
@@ -544,12 +545,15 @@
 						</a>
 						
 					</li> -->
+					<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
 					<li class="<?php if($this->uri->segment(1) == 'setting' ){echo 'open';} ?>">
 						<a href="<?= base_url('setting')?>">
 							<i class="icon-cog"></i>
 							Setting
 						</a>
 					</li>
+					<?php endif ?>
+					
 						</ul>
 					</li>
 				</ul>
