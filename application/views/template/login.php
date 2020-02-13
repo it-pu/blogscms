@@ -27,7 +27,7 @@
 	<!--[if IE 8]>
 		<link href="<?= base_url('assets/css/ie8.css')?>" rel="stylesheet" type="text/css" />
 	<![endif]-->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
 	<link href="https://pcam.podomorouniversity.ac.id/assets/template/plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" />
 

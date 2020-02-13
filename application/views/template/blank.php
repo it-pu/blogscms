@@ -147,7 +147,7 @@
 
 	<script type="text/javascript">
     	window.base_url_js = "<?php echo base_url(); ?>";
-    	
+       	window.base_url_js_sw = "<?= url_blog ?>"; //routes url_blogs_admin in index.php
 	</script>
 
 
