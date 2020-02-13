@@ -65,8 +65,8 @@
 								<div class="tab-pane" id="tab_1_2">
 									
 									<div class="col-md-12 ">
-										<div class="embed-responsive">
-											<iframe class="embed-responsive-item" src="<?= url_blog?>/about" width="100%" height="600"></iframe>
+
+										<div class="embed-responsive" id="frame-priview">
 										</div>
 									</div>
 									
@@ -140,11 +140,11 @@ $(document).ready(function() {
     }
 
 	//function UPDATE about
-    $('#btn_update').on('click',function(event){
-    		event.preventDefault();
+    $('#btn_update').on('click',function(){
+    		// e.preventDefault();
     		$('#btn_update').text('Update...'); //change button text
     		$('#btn_update').attr('disabled',true); //set button disable
-
+    		// location.reload(true);
     		var formData = new FormData($('#form')[0]);
     		// console.log($('.note-editable').text());return;
 			formData.append("summernote", $('.note-editable').text() );
@@ -161,14 +161,15 @@ $(document).ready(function() {
                 dataType : "JSON",
                 data : formData,
                 success: function(data){
+                	// console.log(data.status);
                 	
-                	// console.log(data);
 			       	if(data.status) //if success close modal and reload ajax table
 		            {
 		                $('#btn_update').text('Update'); //change button text
             			$('#btn_update').attr('disabled',false); //set button enable 
             			$('#alert').addClass('active');
 	        			$('#alert').removeClass('none');
+	        			$('#frame-priview').html('<iframe class="embed-responsive-item" src="'+base_url_js_sw+'/about" width="100%" height="600"></iframe>');
 	        			show_about();
 		            }
 		            else
@@ -180,8 +181,8 @@ $(document).ready(function() {
 		                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
 		                }
 		            }
-			       	// $('#btn_update').text('Update'); //change button text
-           //  		$('#btn_update').prop('disabled',false); //set button enable 
+			       	$('#btn_update').text('Update'); //change button text
+            		$('#btn_update').prop('disabled',false); //set button enable 
            			
 			    },
 			    error: function (data)
