@@ -121,6 +121,9 @@
             define("url_sign_in_lecturers",$HostPath."lecturerpu.podomorouniversity.ac.id/", true);
             define("url_sign_in_students",$HostPath."studentpu.podomorouniversity.ac.id/", true);
             define("url_library","http://library.podomorouniversity.ac.id/", true);
+
+            define("url_blog",$HostPath."blogs.podomorouniversity.ac.id/", true);
+            define("url_blog_admin",$HostPath."adminblogs.podomorouniversity.ac.id/", true);
             
             define("path_register_online","/var/www/html/registeronline/", true);
             define('ENVIRONMENT', 'production',true);
