@@ -1,3 +1,4 @@
+<?php $AuthDivisionCrud = array(16,12); ?>
 <div id="content">
 	<div class="container">
 		<!-- Breadcrumbs line -->
