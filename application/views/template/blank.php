@@ -524,12 +524,14 @@
 								Article
 								</a>
 							</li>
+							<?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
 							<li class="<?php if($this->uri->segment(2) == 'banner' ){echo 'current';} ?>">
 								<a href="<?=  base_url('content/banner')?>">
 								<i class="icon-angle-right"></i>
 								Right Banner
 								</a>
 							</li>
+							<?php endif ?>
 							<li class="<?php if($this->uri->segment(2) == 'category' ){echo 'current';} ?>">
 								<a href="<?=  base_url('content/category')?>">
 								<i class="icon-angle-right"></i>
