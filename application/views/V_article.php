@@ -359,16 +359,16 @@
             ],
             fontsize: '14',
             callbacks: {
-                  onPaste: function (e) {
+              	onPaste: function (e) {
                     var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text');
                     e.preventDefault();
                     var div = $('<div />');
                     div.append(bufferText);
                     div.find('*').removeAttr('style');
                     setTimeout(function () {
-                      document.execCommand('insertHtml', false, div.html());
-                    }, 10);
-                  }
+	                      document.execCommand('insertHtml', false, div.html());
+	                    }, 10);
+                  	}
                 }
         });
  	// ===== Category ====== //
@@ -477,7 +477,7 @@
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
                             '<td style="text-align:left;">'+
-                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+data[i].Content+'" data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" ID_set_group = "'+data[i].ID_set_group+'" >Edit</a>'+' '+
+                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+jwt_encode(data[i].Content,'UAP)(*')+'" data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" ID_set_group = "'+data[i].ID_set_group+'" >Edit</a>'+' '+
                                 '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_title+'">Delete</a>'+
                             '</td>'+
                             '</tr>';
@@ -496,7 +496,7 @@
 			var id = $(this).data('idtitle');
 			var title = $(this).data('title');
 			var category = $(this).data('category');
-			var content = $(this).attr("data-content");
+			var content = jwt_decode($(this).attr("data-content"));
 			var url = $(this).data('url');
 			var status = $(this).data('status');
 			var images = $(this).data('images');
