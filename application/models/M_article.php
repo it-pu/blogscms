@@ -73,6 +73,11 @@ class M_article extends CI_Model{
 		return $hasil->result();
 	}
 
+    function list_banner(){
+        $hasil= $this->db->query('select * from db_blogs.banner order by ID_banner desc');
+        return $hasil->result();
+    }
+
 	function data_about($id){
 		return $this->db->query('select a.ID_AboutUS,a.Title,a.Description,a.CreateAT,b.Name as UpdateBY from db_blogs.about as a join db_employees.employees as b on a.UpdateBY = b.NIP ')->row();
 
@@ -98,11 +103,39 @@ class M_article extends CI_Model{
         return $this->db->insert_id();
         // $result=$this->db->insert('article',$data);
     }
- 	
+
+    function save_banner($data){
+
+        $this->db->insert('db_blogs.banner', $data);
+        return $this->db->insert_id();
+        // $result=$this->db->insert('article',$data);
+    }
+
+    public function update_banner($where, $data)
+    {
+        $this->db->where('ID_Banner',$where);
+        $this->db->update('db_blogs.banner', $data);
+        return 1;
+    }
+
+    function delete_banner(){
+       
+        $id = $this->input->post('id');
+        $hasil=$this->db->query("DELETE FROM db_blogs.banner WHERE ID_Banner='$id'");
+        return $hasil;
+    }
+
+ 	public function get_by_idbanner($id)
+    {
+        return $this->db->get_where('db_blogs.banner', array('ID_Banner' => $id))->row();
+    }
+
  	public function get_by_id($id)
     {
         return $this->db->get_where('db_blogs.article', array('ID_title' => $id))->row();
 	}
+
+   
 
 	public function update_category($where, $data)
     {

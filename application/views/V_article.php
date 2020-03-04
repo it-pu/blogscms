@@ -81,8 +81,8 @@
 </div>
 
 <!-- ======== add article modal ======= -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+<div class="modal fade bs-example-modal-lg" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -131,7 +131,8 @@
 					</div> -->
 					<div class="form-group">
 						<label class="col-md-2 control-label">Content:</label>
-						<div class="col-md-9"><textarea rows="5" name="content" class="form-control"></textarea>
+						<div class="col-md-9">
+							<textarea rows="5" name="content" id="Description1" class="form-control"></textarea>
 						 <span class="help-block"></span>
 						</div>
 					</div>
@@ -178,8 +179,8 @@
 </div><!-- /.modal -->
 
 <!-- ======== edit article modal ======= -->
-<div class="modal fade" id="modal_edit" role="dialog">
-    <div class="modal-dialog">
+<div class="modal fade bs-example-modal-lg" id="modal_edit" role="dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -208,7 +209,7 @@
 						<div class="col-md-9">
 						
 							<select class="form-control" name="category_edit" id="category_edit">
-								<option value="">Select</option>
+
 								
 							</select>
 							
@@ -236,7 +237,8 @@
 					</div> -->
 					<div class="form-group">
 						<label class="col-md-2 control-label">Content:</label>
-						<div class="col-md-9"><textarea rows="5"  name="content_edit"  class="form-control "></textarea>
+						<div class="col-md-9">
+							<textarea rows="5"  name="content_edit" id="Description2" class="form-control "></textarea>
 						</div>
 					</div>
 					
@@ -315,7 +317,60 @@
 		show_category();
 		show_category_edit();
 	});
-
+	$('#Description1').summernote({
+            placeholder: 'Text your announcement',
+            tabsize: 2,
+            height: 300,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+            fontsize: '14',
+            callbacks: {
+                  onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text');
+                    e.preventDefault();
+                    var div = $('<div />');
+                    div.append(bufferText);
+                    div.find('*').removeAttr('style');
+                    setTimeout(function () {
+                      document.execCommand('insertHtml', false, div.html());
+                    }, 10);
+                  }
+                }
+        });
+	$('#Description2').summernote({
+            placeholder: 'Text your announcement',
+            tabsize: 2,
+            height: 300,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+            fontsize: '14',
+            callbacks: {
+                  onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text');
+                    e.preventDefault();
+                    var div = $('<div />');
+                    div.append(bufferText);
+                    div.find('*').removeAttr('style');
+                    setTimeout(function () {
+                      document.execCommand('insertHtml', false, div.html());
+                    }, 10);
+                  }
+                }
+        });
  	// ===== Category ====== //
 	function show_category(){
         $.ajax({
@@ -422,12 +477,15 @@
                             '<td>'+data[i].CreateAT+'</td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
                             '<td style="text-align:left;">'+
-                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+data[i].Content+'"  data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" ID_set_group = "'+data[i].ID_set_group+'" >Edit</a>'+' '+
+                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+data[i].Content+'" data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" ID_set_group = "'+data[i].ID_set_group+'" >Edit</a>'+' '+
                                 '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_title+'">Delete</a>'+
                             '</td>'+
                             '</tr>';
+                    // content +=''+data[i].Content+'';
+
                 }
                 $('#show_data').html(html);
+                // $('a').attr('data-content', content);
             }
 
         });
@@ -438,7 +496,7 @@
 			var id = $(this).data('idtitle');
 			var title = $(this).data('title');
 			var category = $(this).data('category');
-			var content = $(this).data('content');
+			var content = $(this).attr("data-content");
 			var url = $(this).data('url');
 			var status = $(this).data('status');
 			var images = $(this).data('images');
@@ -460,8 +518,8 @@
             }).prop("selected", true);
 
             // $('#show_cat_edit_edit').append('<option value="'+category+'" selected>'+category+'</option>');
-            // $('[name="content_edit"]').summernote("code",content);
-            $('[name="content_edit"]').val(content);
+            $('[name="content_edit"]').summernote("code",content);
+            // $('[name="content_edit"]').val(content);
             $('[name="url_edit"]').val(url);
             $('[name="status_edit"]').val(status);
             // $('#exampleModal').modal('show'); // show bootstrap modal when complete loaded
@@ -497,6 +555,7 @@
     		$('#btn_save').attr('disabled',true); //set button disable
     		
             var formData = new FormData($('#form')[0]);
+            formData.append("summernote", $('.note-editable').text() );
             $.ajax({
                 type : "POST",
                 url  : base_url_js +'__save_article',
@@ -556,7 +615,7 @@
     		
 
     		var formData = new FormData($('#form1')[0]);
-    		
+    		formData.append("summernote", $('.note-editable').text() );
             $.ajax({
                 type : "POST",
                 url  : base_url_js +'__update_article',
@@ -619,7 +678,7 @@
     $('#show_data').on('click','.item_delete',function(){
         var idtitle = $(this).data('idtitle');
          
-        $('#modal_delete').modal('show');
+        // $('#modal_delete').modal('show');
         $('[name="idtitle"]').val(idtitle);
     });
 

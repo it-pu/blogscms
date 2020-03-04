@@ -66,7 +66,7 @@
 									
 									<div class="col-md-12 ">
 
-										<div class="embed-responsive" id="frame-priview">
+										<div class="embed-responsive embed-responsive-4by3" id="frame-priview">
 										</div>
 									</div>
 									
@@ -101,6 +101,7 @@ $(document).ready(function() {
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['height', ['height']]
             ],
+            fontsize:'14',
             callbacks: {
                   onPaste: function (e) {
                     var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
@@ -129,6 +130,7 @@ $(document).ready(function() {
                 	// $('#idtitle').val(data.ID_AboutUS);
 		            $('input[name="title"]').val(data.Title);
 		            $('[name="content"]').summernote('code',data.Description);
+		            $('#frame-priview').html('<iframe class="embed-responsive-item" src="'+base_url_js_sw+'/about" width="100%" height="600"></iframe>');
 		            // redirect(base_url());
             },  
             error: function (data)

@@ -11,6 +11,7 @@
 	<link href="<?= base_url('assets/img/favicon.png') ?>" rel="apple-touch-icon">
 	<!-- Bootstrap -->
 	<link href="<?= base_url('assets/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet" type="text/css" />
+	<!-- <link href="<?= base_url('assets/css/compiled-4.10.1.min.css')?>" rel="stylesheet" type="text/css" /> -->
 
 	<!-- jQuery UI -->
 	<!--<link href="<?= base_url('assets/plugins/jquery-ui/jquery-ui-1.10.2.custom.css')?>" rel="stylesheet" type="text/css" />-->
@@ -142,6 +143,8 @@
 		  "hideMethod": "fadeOut"
 		}
 	});
+
+
 	</script>
 	<script type="text/javascript" src="<?= base_url('assets/js/demo/form_validation.js')?>"></script>
 
@@ -158,7 +161,7 @@
 	<!-- Header -->
 	<header class="header navbar navbar-fixed-top" role="banner">
 		<!-- Top Navigation Bar -->
-		<div class="container">
+		<div class="container-flued">
 
 			<!-- Only visible on smartphones, menu toggle -->
 			<ul class="nav navbar-nav">
@@ -519,6 +522,12 @@
 								<a href="<?=  base_url('content/article')?>">
 								<i class="icon-angle-right"></i>
 								Article
+								</a>
+							</li>
+							<li class="<?php if($this->uri->segment(2) == 'banner' ){echo 'current';} ?>">
+								<a href="<?=  base_url('content/banner')?>">
+								<i class="icon-angle-right"></i>
+								Right Banner
 								</a>
 							</li>
 							<li class="<?php if($this->uri->segment(2) == 'category' ){echo 'current';} ?>">

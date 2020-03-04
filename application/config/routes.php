@@ -57,6 +57,7 @@ $route['dashboard']='c_content/index';
 $route['content/article']='c_content/article';
 $route['add_article']='c_content/add_article';
 $route['about']='c_content/about';
+$route['content/banner']='c_content/banner';
 $route['edit_article/(:any)']='c_content/edit_article/$1';
 $route['show_category']='c_content/show_category';
 $route['content/category'] = 'c_content/category';
@@ -78,8 +79,10 @@ $route['__show_about']='c_content/show_about';
 $route['__update_about']='c_content/update_about';
 $route['__load_contact'] = 'c_content/show_contact';
 $route['__show_topic'] = 'c_content/show_topic';
-
-
+$route['__load_banner'] = 'c_content/show_banner';
+$route['__save_banner']='c_content/save_banner';
+$route['__update_banner']='c_content/update_banner';
+$route['__delete_banner']='c_content/delete_banner';
 // summernote
 $route['__upload_img'] = 'c_content/upload_image';
 
