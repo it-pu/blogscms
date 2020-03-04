@@ -102,7 +102,7 @@
 
 							<input type="file" name="photo" class="required" accept="image/*" data-style="fileinput" data-inputsize="medium" >
 							<p class="help-block">* Max size 2MB</p>
-							<p class="help-block">* Images only (image/jpg/jpeg/png*) and 515px width X 660px height</p>
+							<p class="help-block">* Images only (image/jpg/jpeg/png*) and 515px width X 460px height</p>
 							<span for="photo" class="error help-block" id="error" generated="true" ></span>
 							<!-- <span class="help-block"></span> -->
 						</div>
@@ -160,7 +160,7 @@
 						<div class="col-md-9">
 
 							<input type="file" name="photo" id="photo_edit"  accept="image/*" data-style="fileinput" data-inputsize="medium">
-							<p class="help-block">Images only (image/jpg/jpeg/png*) and 515 width X 660px height</p>
+							<p class="help-block">Images only (image/jpg/jpeg/png*) and 515 width X 460px height</p>
 							<div for="photo" class="error help-block" id="error-edit" generated="true" ></div>
 						</div>
 					</div>

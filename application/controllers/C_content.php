@@ -457,7 +457,7 @@ class C_content extends MY_Controller {
         $config['quality']= '100%';
         $config['max_size'] = '2048'; //2MB
         $config['width']= 515;
-        $config['height']= 660;
+        $config['height']= 460;
         $config['create_thumb']= FALSE;
         
         // $config['max_size']             = 100; //set max size allowed in Kilobyte
