@@ -550,7 +550,7 @@
 
     //function add all article
     $('#btn_save').on('click',function(){
-
+    		
     		$('#btn_save').text('saving...'); //change button text
     		$('#btn_save').attr('disabled',true); //set button disable
     		
