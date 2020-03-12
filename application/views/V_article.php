@@ -60,6 +60,7 @@
 									<?php endif ?>
 									<th data-class="expand"  style="width:32%;">Title</th>
 									<th>Author</th>
+									<th style="width:5%;">Visit</th>
 									<th data-hide="phone">Create Date</th>
 									<th data-hide="phone,tablet">Status</th>
 									<th> Action </tr>
@@ -474,8 +475,9 @@
 
                     html += '<td>'+data[i].Title+'</td>'+
                             '<td>'+data[i].UpdateBY+' As '+data[i].GroupName+'</td>'+
-                            '<td>'+data[i].CreateAT+'</td>'+
-                            '<td><span class="label '+data[i].Status+'">'+data[i].Status+'</span></td>'+
+                            '<td><span style="    font-size: 12px; color: #bd362f;font-weight: 600;"><i class="glyphicon glyphicon-eye-open"></i> ' +data[i].Tot_Visit+' Kali</span></td>'+
+                            '<td>'+data[i].CreateAT+' </td>'+
+                            '<td><span class="label '+data[i].Status+'">'+data[i].Status+' </span> </td>'+
                             '<td style="text-align:left;">'+
                                 '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+jwt_encode(data[i].Content,'UAP)(*')+'" data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" ID_set_group = "'+data[i].ID_set_group+'" >Edit</a>'+' '+
                                 '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_title+'">Delete</a>'+
