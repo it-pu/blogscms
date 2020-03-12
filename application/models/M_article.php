@@ -42,11 +42,13 @@ class M_article extends CI_Model{
             $Addwhere = $WhereOrAnd.' a.UpdateBY ="'.$this->session->userdata('Username').'" ';
         }
 		$hasil= $this->db->query('select a.*,b.Name,
-                                 '.$this->getNameUpdateBY().',c.GroupName
+                                 '.$this->getNameUpdateBY().',c.GroupName,COUNT(sv.id_article)Tot_Visit
                                  from db_blogs.article  as a
+                                 INNER JOIN db_blogs.site_visits sv ON sv.id_article=a.ID_title
                                  join db_blogs.category as b on a.ID_category =  b.ID_category
                                  join db_blogs.set_group as c on a.ID_set_group = c.ID_set_group
                                  '.$Addwhere.'
+                                 GROUP BY sv.id_article
                                  order by ID_title desc')->result_array();
         // print_r($this->db->last_query());die();
 
