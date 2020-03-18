@@ -41,15 +41,17 @@ class M_article extends CI_Model{
             $WhereOrAnd = ($Addwhere == '') ? ' Where ' : ' And ';
             $Addwhere = $WhereOrAnd.' a.UpdateBY ="'.$this->session->userdata('Username').'" ';
         }
-		$hasil= $this->db->query('select a.*,b.Name,
-                                 '.$this->getNameUpdateBY().',c.GroupName,COUNT(sv.id_article)Tot_Visit
-                                 from db_blogs.article  as a
-                                 INNER JOIN db_blogs.site_visits sv ON sv.id_article=a.ID_title
-                                 join db_blogs.category as b on a.ID_category =  b.ID_category
-                                 join db_blogs.set_group as c on a.ID_set_group = c.ID_set_group
-                                 '.$Addwhere.'
-                                 GROUP BY sv.id_article
-                                 order by ID_title desc')->result_array();
+		$hasil= $this->db->query('SELECT a.*,b.Name,c.GroupName,'.$this->getNameUpdateBY().',c.GroupName,
+                                        (
+                                            SELECT Count(sv.id_article) 
+                                            FROM db_blogs.site_visits sv 
+                                            WHERE sv.id_article = a.ID_title
+                                        ) as Tot_Visit 
+                                    FROM  db_blogs.article AS a
+                                    JOIN  db_blogs.category AS b on a.ID_category =  b.ID_category
+                                    JOIN  db_blogs.set_group AS c on a.ID_set_group = c.ID_set_group
+                                    '.$Addwhere.'
+                                    ORDER BY ID_title DESC')->result_array();
         // print_r($this->db->last_query());die();
 
         for ($i=0; $i < count($hasil); $i++) { 
