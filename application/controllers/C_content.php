@@ -73,7 +73,12 @@ class C_content extends MY_Controller {
     }
 
     // ===== CRUD Article ====== //
-    
+    function show_articlebylimit(){
+        $input = $this->getInputToken();
+        $data=$this->m_article->loadByLimit_article();
+        echo json_encode($data);
+    }
+
     function show_article(){
         $data=$this->m_article->list_article();
         echo json_encode($data);
@@ -341,7 +346,7 @@ class C_content extends MY_Controller {
     private function _do_upload()
     {
         $config['upload_path']          = 'upload/';
-        $config['allowed_types']        = 'jpeg|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|PNG|JPG';
         $config['encrypt_name'] = TRUE;
         $config['maintain_ratio']= false; // Ratio menyesuaikan  //false mengikutin height ratio
         $config['quality']= '100%';
@@ -451,7 +456,7 @@ class C_content extends MY_Controller {
     private function _do_uploadbanner()
     {
         $config['upload_path']          = 'upload/';
-        $config['allowed_types']        = 'jpeg|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|PNG|JPG';
         $config['encrypt_name'] = TRUE;
         $config['maintain_ratio']= false; // Ratio menyesuaikan  //false mengikutin height ratio
         $config['quality']= '100%';

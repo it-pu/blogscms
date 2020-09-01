@@ -100,3 +100,5 @@ $route['__data_setting_listmember'] = 'c_content/data_setting_listmember';
 
 
 
+// ======= api ===== //
+$route['__getapiblogs'] = 'c_content/show_articlebylimit';
