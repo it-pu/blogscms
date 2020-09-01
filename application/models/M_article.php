@@ -32,6 +32,11 @@ class M_article extends CI_Model{
     }
 
     // ========== CRUD Article ========== //
+    function loadByLimit_article(){
+        $sql = "select * from db_blogs.article";
+        $query = $this->db->query($sql)->result_array();
+       return print_r(json_encode($query));
+    }
 
 	function list_article(){
         // $hasil= $this->db->query('select * from db_blogs.article order by ID_title desc');

@@ -153,7 +153,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-md-2 control-label">AS:</label>
+						<label class="col-md-2 control-label">Post To:</label>
 						<div class="col-md-9">
 							<?php $AS = (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)) ? $this->session->userdata('AS') : $Arr_AS  ?>
 							<select class="form-control" name="ID_set_group" id="ID_set_group">
