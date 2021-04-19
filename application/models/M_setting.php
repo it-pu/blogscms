@@ -9,6 +9,11 @@ class M_setting extends CI_Model{
         $this->load->library('JWT');
     }
 
+    public function MasterGroup_LoadData(){
+        $hasil = $this->db->query('select * from db_blogs.set_master_group where Active = 1 ')->result_array();
+        return $hasil;
+    }
+
     public function Group_LoadData(){
         $hasil = $this->db->query('select * from db_blogs.set_group where Active = 1 ')->result_array();
         return $hasil;
@@ -24,6 +29,10 @@ class M_setting extends CI_Model{
         $Addwhere = '';
         if (array_key_exists('param', $dataToken)) {
             $param = $dataToken['param'];
+            if (array_key_exists('ChooseMasterGroup', $param)) {
+               $WhereOrAnd = ($Addwhere == '') ? ' Where ' : ' And ';
+               $Addwhere .= ($param['ChooseMasterGroup'] != '%') ? $WhereOrAnd.' a.ID_master_group = '.$param['ChooseMasterGroup'] : '';
+            }
             if (array_key_exists('ChooseGroup', $param)) {
                $WhereOrAnd = ($Addwhere == '') ? ' Where ' : ' And ';
                $Addwhere .= ($param['ChooseGroup'] != '%') ? $WhereOrAnd.' a.ID_set_group = '.$param['ChooseGroup'] : '';
@@ -38,9 +47,10 @@ class M_setting extends CI_Model{
         $sql = 'select a.ID_set_group,b.GroupName,a.ID_set_member,c.MemberName,a.NIPNPM, '
                 .$this->m_article->getNameUpdateBY('a.NIPNPM','MemberListName').',
                 '.$this->m_article->getEMPorMHS('a.NIPNPM','TypeUser').',
-                a.UpdateBY,d.Name as NameUpdateBY,a.UpdateAT,a.ID_set_list_member   
+                a.UpdateBY,d.Name as NameUpdateBY,a.UpdateAT,a.ID_set_list_member, a.ID_master_group, e.MasterGroupName   
                 from db_blogs.set_list_member as a 
                 join db_blogs.set_group as b on a.ID_set_group = b.ID_set_group
+                join db_blogs.set_master_group as e on a.ID_master_group = e.ID_master_group
                 join db_blogs.set_member as c on a.ID_set_member = c.ID_set_member
                 join db_employees.employees as d on a.UpdateBY = d.NIP
                 '.$Addwhere.'
@@ -55,11 +65,37 @@ class M_setting extends CI_Model{
             $nestedData[] = $row['NIPNPM'];
             $nestedData[] = $row['MemberListName'];
             $nestedData[] = $row['MemberName'];
+            $nestedData[] = $row['MasterGroupName'];
             $nestedData[] = $row['GroupName'];
             $nestedData[] = $row['NameUpdateBY'];
             $nestedData[] = $row['UpdateAT'];
 
             $nestedData[] = $row['ID_set_list_member'];
+            $token = $this->jwt->encode($row,"UAP)(*");
+            $nestedData[] = $token;
+            $data[] = $nestedData;
+        }
+
+        $rs = array(
+            "draw"            => intval( 0 ),
+            "recordsTotal"    => intval(count($query)),
+            "recordsFiltered" => intval( count($query) ),
+            "data"            => $data
+        );
+        return $rs;
+    }
+
+    public function MasterGroup_LoadData_datatables(){
+        $sql = 'select * from db_blogs.set_master_group where Active = 1
+            ';
+        $query = $this->db->query($sql,array())->result_array();
+        $data = array();
+        for ($i=0; $i < count($query); $i++) { 
+            $nestedData = array();
+            $row = $query[$i]; 
+            $nestedData[] = ($i+1);
+            $nestedData[] = $row['MasterGroupName'];
+            $nestedData[] = $row['ID_master_group'];
             $token = $this->jwt->encode($row,"UAP)(*");
             $nestedData[] = $token;
             $data[] = $nestedData;
