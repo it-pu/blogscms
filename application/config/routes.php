@@ -95,6 +95,7 @@ $route['logout'] = 'c_login/logout';
 
 // ======== CRUD Setting ====== //
 $route['__data_setting_group'] = 'c_content/data_setting_group';
+$route['__data_setting_master_group'] = 'c_content/data_setting_master_group';
 $route['__data_setting_member'] = 'c_content/data_setting_member';
 $route['__data_setting_listmember'] = 'c_content/data_setting_listmember';
 

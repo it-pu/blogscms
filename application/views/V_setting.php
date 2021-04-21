@@ -34,7 +34,42 @@
 
 		<!-- Page Content -->
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-4">
+				<div class="widget box">
+				    <div class="widget-header">
+				        <h4 class="header"><i class="icon-reorder"></i>Master Group</h4>
+				        <?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+				        	<div class="toolbar no-padding">
+				        	    <div class="btn-group">
+				        	      <span data-smt="" class="btn btn-xs btn-add-master-group">
+				        	        <i class="icon-plus"></i> Add
+				        	       </span>
+				        	    </div>
+				        	</div>
+				        <?php endif ?>
+				    </div>
+				    <div class="widget-content">
+				       <div class="row">
+				       	<div class="col-md-12">
+				       		<div style="overflow-x: auto;">
+				       			<table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable" id="TableMasterGroup">
+				       				<thead>
+				       					<tr>
+				       						<th>No</th>
+				       						<th>Group Name</th>
+				       						<th>Action</th>
+				       					</tr>
+				       				</thead>
+				       				<tbody></tbody>
+				       			</table>	
+				       		</div>
+				       	</div>
+				       </div>
+				    </div>
+				    <hr/>
+				</div>
+			</div>
+			<div class="col-md-4">
 				<div class="widget box">
 				    <div class="widget-header">
 				        <h4 class="header"><i class="icon-reorder"></i>Group</h4>
@@ -69,7 +104,7 @@
 				    <hr/>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="widget box">
 				    <div class="widget-header">
 				        <h4 class="header"><i class="icon-reorder"></i>Member</h4>
@@ -127,7 +162,15 @@
 				    		<div class="col-md-6 col-md-offset-3">
 				    			<div class="well">
 				    				<div class="row">
-				    					<div class="col-md-6">
+				    					<div class="col-md-4">
+				    						<div class="form-group">
+				    							<label>Choose Maste Group</label>
+				    							<select class="form-control" id ="ChooseMasterGroup">
+				    								
+				    							</select>
+				    						</div>
+				    					</div>
+				    					<div class="col-md-4">
 				    						<div class="form-group">
 				    							<label>Choose Group</label>
 				    							<select class="form-control" id ="ChooseGroup">
@@ -135,7 +178,7 @@
 				    							</select>
 				    						</div>
 				    					</div>
-				    					<div class="col-md-6">
+				    					<div class="col-md-4">
 				    						<div class="form-group">
 				    							<label>Choose Member Level</label>
 				    							<select class="form-control" id ="ChooseMember">
@@ -158,6 +201,7 @@
 				    							<th>NIP / NPM</th>
 				    							<th>MemberListName</th>
 				    							<th>Level Member</th>
+				    							<th>GroupMasterName</th>
 				    							<th>GroupName</th>
 				    							<th>NameUpdateBY</th>
 				    							<th>UpdateAT</th>
@@ -181,14 +225,16 @@
 </div>
 <script type="text/javascript">
 	var oTableListMember;
+	var oTableMasterGroup;
 	var oTableGroup;
 	var oTableMember;
 	var App_list_member = {
 		Loaded : function(){
 			var firstLoad = setInterval(function () {
 	            var ChooseGroup = $('#ChooseGroup').val();
+	            var ChooseMasterGroup = $('#ChooseMasterGroup').val();
 	            var ChooseMember = $('#ChooseMember').val();
-	            if(ChooseGroup!='' && ChooseGroup!=null && ChooseMember!='' && ChooseMember!=null ){
+	            if(ChooseGroup!='' && ChooseGroup!=null && ChooseMasterGroup!='' && ChooseMasterGroup!=null && ChooseMember!='' && ChooseMember!=null ){
 	                /*
 	                    LoadAction
 	                */
@@ -215,6 +261,7 @@
 			               		  action : 'datatables',
 			               		  param : {
 			               		  	ChooseGroup : $('#ChooseGroup option:selected').val(),
+			               		  	ChooseMasterGroup : $('#ChooseMasterGroup option:selected').val(),
 			               		  	ChooseMember : $('#ChooseMember option:selected').val(),
 			               		  },
 			                  };
@@ -238,8 +285,8 @@
 			            'render': function (data, type, full, meta){
 			            	   var btnaction = '';
 			            	   <?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
-			            	   		var btnEdit = '<button class = "btn btn-info btn-sm btnEditListMember" data-id="'+full[7]+'" datatoken = "'+full[8]+'" >Edit</button>';
-			            	   		var btnDelete = '<button class = "btn btn-danger btn-sm btnDeleteListMember" data-id="'+full[7]+'">Delete</button> ';
+			            	   		var btnEdit = '<button class = "btn btn-info btn-sm btnEditListMember" data-id="'+full[8]+'" datatoken = "'+full[9]+'" >Edit</button>';
+			            	   		var btnDelete = '<button class = "btn btn-danger btn-sm btnDeleteListMember" data-id="'+full[8]+'">Delete</button> ';
 			            	   		btnaction = btnEdit+' '+btnDelete;
 			            	   <?php endif ?>
 			            	   return btnaction;
@@ -264,6 +311,10 @@
 		              '<button type="button" id="ModalbtnSaveFormListMember" class="btn btn-success" action="'+action+'" data-id="'+ID+'">Save</button>'; 
 		    var html = '<div class="row" page = "FrmListMember">'+
 		    				'<div class = "col-md-12">'+
+		    					'<div class = "form-group">'+
+		    						'<label>Choose Master Group</label>'+
+		    						'<select class = "form-control FrmListMember" name = "ID_master_group"></select>'+
+		    					'</div>'+
 		    					'<div class = "form-group">'+
 		    						'<label>Choose Group</label>'+
 		    						'<select class = "form-control FrmListMember" name = "ID_set_group"></select>'+
@@ -300,8 +351,10 @@
 			    'backdrop' : 'static'
 			});
 			var selectorOPGroup = $('.FrmListMember[name="ID_set_group"]');
+			var selectorOPMasterGroup = $('.FrmListMember[name="ID_master_group"]');
 			var selectorOPMember = $('.FrmListMember[name="ID_set_member"]');
 			App_group.LoadSelectOP(selectorOPGroup,'','');
+			App_master_group.LoadSelectOP(selectorOPMasterGroup,'','');
 			App_member.LoadSelectOP(selectorOPMember,'','');
 			if(action == 'edit'){
 				$('#GlobalModalLarge').find('input').prop('disabled',true);
@@ -311,8 +364,9 @@
 				var dt = jwt_decode(datatoken);
 				var firstLoad = setInterval(function () {
 			            var ChooseGroup = selectorOPGroup.val();
+			            var ChooseMasterGroup = selectorOPMasterGroup.val();
 			            var ChooseMember = selectorOPMember.val();
-			            if(ChooseGroup!='' && ChooseGroup!=null && ChooseMember!='' && ChooseMember!=null ){
+			            if(ChooseGroup!='' && ChooseGroup!=null && ChooseMasterGroup!='' && ChooseMasterGroup!=null && ChooseMember!='' && ChooseMember!=null ){
 			                for (key in dt){
 			                	if ($('.FrmListMember[name="'+key+'"]').length && $('.FrmListMember[name="'+key+'"]').is('select') ) {
 			                		$(".FrmListMember[name='"+key+"'] option").filter(function() {
@@ -609,6 +663,192 @@
 	};
 
 
+	var App_master_group = {
+		Loaded : function(){
+			App_master_group.LoadTable();
+		},
+
+		LoadTable : function(){
+			var recordTable = $('#TableMasterGroup').DataTable({
+			    "processing": true,
+			    "serverSide": false,
+			    "lengthMenu": [
+			        [5],
+			        [5]
+			    ],
+			    "iDisplayLength": 5,
+			    "ajax":{
+			        url : base_url_js+"__data_setting_master_group", // json datasource
+			        ordering : false,
+			        type: "post",  // method  , by default get
+			        data : function(token){
+			              // Read values
+			               var data = {
+			               		  action : 'datatables',
+			                  };
+			              // Append to data
+			              token.token = jwt_encode(data,'UAP)(*');
+			        }                                                                     
+			     },
+			      'columnDefs': [
+			      	
+			      	{
+			      	   'targets': 0,
+			      	   'searchable': false,
+			      	   'orderable': false,
+			      	   'className': 'dt-body-center',
+			      	},
+			        {
+			            'targets': 2,
+			            'searchable': false,
+			            'orderable': false,
+			            'className': 'dt-body-center',
+			            'render': function (data, type, full, meta){
+			            	   var btnaction = '';
+			            	   <?php if (in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)): ?>
+			            	   		var btnEdit = '<button class = "btn btn-info btn-sm btnEditMasterGroup" data-id="'+full[2]+'" datatoken = "'+full[3]+'" >Edit</button>';
+			            	   		var btnDelete = '<button class = "btn btn-danger btn-sm btnDeleteMasterGroup" data-id="'+full[2]+'">Delete</button> ';
+			            	   		btnaction = btnEdit+' '+btnDelete;
+			            	   <?php endif ?>
+			            	   return btnaction;
+			            }
+			        },
+			         
+			      ],
+			    'createdRow': function( row, data, dataIndex ) {
+			            
+			    },
+			    dom: 'l<"toolbar">frtip',
+			    initComplete: function(){
+			      
+			    }  
+			});
+
+			oTableMasterGroup = recordTable;
+		},
+
+		Form_modal : function(action='add',ID='',datatoken=''){
+			var footer = '<button type="button" id="ModalbtnCancleForm" data-dismiss="modal" class="btn btn-default">Close</button>'+
+		              '<button type="button" id="ModalbtnSaveFormMasterGroup" class="btn btn-success" action="'+action+'" data-id="'+ID+'">Save</button>'; 
+		    var html = '<div class="row" page = "FrmListMember">'+
+		    				'<div class = "col-md-12">'+
+		    					'<div class = "form-group">'+
+		    						'<label>MasterGroupName</label>'+
+		    						'<input type="text" class = "form-control FrmGroup" name = "MasterGroupName" />'+
+		    					'</div>'+
+		    				'</div>'+
+		    			'</div>';	
+
+			$('#GlobalModalLarge .modal-header').html('<h4 class="modal-title">'+'Form Master Group Member'+'</h4>');
+			$('#GlobalModalLarge .modal-body').html(html);
+			$('#GlobalModalLarge .modal-footer').html(footer);
+			$('#GlobalModalLarge').modal({
+			    'show' : true,
+			    'backdrop' : 'static'
+			});
+			if(action == 'edit'){
+				var dt = jwt_decode(datatoken);
+				for (key in dt){
+					$('.FrmGroup[name="'+key+'"]').val(dt[key]);
+				}
+			}
+
+		},
+
+		SubmitData : function(selector,action,ID){
+			var data = {};
+			$('.FrmGroup').each(function(e){
+				var name = $(this).attr('name');
+				if ($(this).is('input')) {
+					var v = $(this).val();
+				}
+
+				if ($(this).is('select')) {
+					var v = $(this).find('option:selected').val();
+				}
+
+				data[name] =  v;
+
+			})
+
+			var validation = (action == 'delete') ? true : App_master_group.validation(data);
+			if (validation) {
+			    if (confirm('Are you sure ?')) {
+			        loading_button2(selector);
+			        var dataform = {
+			            action : action,
+			            data : data,
+			            ID : ID,
+			        };
+			        var url = base_url_js+"__data_setting_master_group";
+			        var token = jwt_encode(dataform,'UAP)(*');
+			        AjaxSubmit(url,token).then(function(response){
+			            if (response.status == 1) {
+			            	toastr.success('Success');
+			                oTableMasterGroup.ajax.reload(null, false);
+			                oTableListMember.ajax.reload(null, false);
+			                var selectorOPMasterGroup = $('#ChooseMasterGroup');
+			                App_master_group.LoadSelectOP(selectorOPMasterGroup,'','yes');
+			                $('#GlobalModalLarge').modal('hide');
+			            }
+			            else
+			            {
+			                toastr.error(response.msg);
+			                end_loading_button2(selector);
+			            }
+			        }).fail(function(response){
+			           toastr.error('Connection error,please try again');
+			           end_loading_button2(selector);     
+			        })
+			    }
+			}
+
+		},
+
+		validation : function(arr){
+			var toatString = "";
+			var result = "";
+			for (key in arr){
+				switch(key)
+				{
+				 default:
+				       result = Validation_required(arr[key],key);
+				       if (result['status'] == 0) {
+				         toatString += result['messages'] + "<br>";
+				       }
+				       break;
+				}
+			}
+
+			if (toatString != "") {
+			  toastr.error(toatString, 'Failed!!');
+			  return false;
+			}
+			return true
+		},
+
+		LoadSelectOP : function(selector,dataselected='',filter='yes'){
+			var url = base_url_js+'__data_setting_master_group';
+			var dataform = {
+				action : 'LoadData',
+			}; 
+			var token = jwt_encode(dataform,'UAP)(*');
+		    AjaxSubmit(url,token).then(function(response){
+		    	selector.empty();
+		    	for (var i = 0; i < response.length; i++) {
+		    		if (i==0 && filter == 'yes') {
+		    			selector.append('<option value="'+'%'+'">'+'--All--'+'</option>')
+		    		}
+		    		var selected = (response[i].ID_master_group == dataselected) ? 'selected' : '';
+
+		    		selector.append('<option value="'+response[i].ID_master_group+'" '+selected+' >'+response[i].MasterGroupName+'</option>');
+		    	}
+			}).fail(function(response){
+		        toastr.error('No data result');
+		    })
+		},
+	};
+
 	var App_group = {
 		Loaded : function(){
 			App_group.LoadTable();
@@ -682,6 +922,10 @@
 		    						'<label>GroupName</label>'+
 		    						'<input type="text" class = "form-control FrmGroup" name = "GroupName" />'+
 		    					'</div>'+
+		    					'<div class = "form-group">'+
+		    						'<label>Choose Master Group</label>'+
+		    						'<select class = "form-control FrmGroup" name = "ID_master_group"></select>'+
+		    					'</div>'+
 		    				'</div>'+
 		    			'</div>';	
 
@@ -692,11 +936,37 @@
 			    'show' : true,
 			    'backdrop' : 'static'
 			});
+			var selectorOPMasterGroup = $('.FrmGroup[name="ID_master_group"]');
+			App_master_group.LoadSelectOP(selectorOPMasterGroup,'','');
 			if(action == 'edit'){
 				var dt = jwt_decode(datatoken);
-				for (key in dt){
-					$('.FrmGroup[name="'+key+'"]').val(dt[key]);
-				}
+				var firstLoad = setInterval(function () {
+		            var ChooseMasterGroup = selectorOPMasterGroup.val();
+		            if(ChooseMasterGroup!='' && ChooseMasterGroup!=null){
+		                for (key in dt){
+		                	if ($('.FrmGroup[name="'+key+'"]').length && $('.FrmGroup[name="'+key+'"]').is('select') ) {
+		                		$(".FrmGroup[name='"+key+"'] option").filter(function() {
+		                		   //may want to use $.trim in here
+		                		   return $(this).val() == dt[key]; 
+		                		}).prop("selected", true);
+		                	}
+
+		                	if ($('.FrmGroup[name="'+key+'"]').length && $('.FrmGroup[name="'+key+'"]').is('input') ) {
+		                		$('.FrmGroup[name="'+key+'"]').val(dt[key]);
+		                		$('.FrmGroup[name="'+key+'"]').closest('.form-group').find('label[for="Name"]').html(dt['MemberListName']);
+		                	}
+
+		                	
+		                	
+		                }	
+		                
+		                clearInterval(firstLoad);
+		            }
+		        },200);
+		        setTimeout(function () {
+		            clearInterval(firstLoad);
+		        },5000);
+					
 			}
 
 		},
@@ -714,7 +984,8 @@
 				}
 
 				data[name] =  v;
-
+				// alert(data[name]);
+				
 			})
 
 			var validation = (action == 'delete') ? true : App_group.validation(data);
@@ -725,7 +996,7 @@
 			            action : action,
 			            data : data,
 			            ID : ID,
-			        };
+			        };			        
 			        var url = base_url_js+"__data_setting_group";
 			        var token = jwt_encode(dataform,'UAP)(*');
 			        AjaxSubmit(url,token).then(function(response){
@@ -733,8 +1004,8 @@
 			            	toastr.success('Success');
 			                oTableGroup.ajax.reload(null, false);
 			                oTableListMember.ajax.reload(null, false);
-			                var selectorOPGroup = $('#ChooseGroup');
-			                App_group.LoadSelectOP(selectorOPGroup,'','yes');
+			                var selectorOPMasterGroup = $('#ChooseMasterGroup');
+			                App_group.LoadSelectOP(selectorOPMasterGroup,'','yes');
 			                $('#GlobalModalLarge').modal('hide');
 			            }
 			            else
@@ -1004,9 +1275,12 @@
 		Loaded : function(){
 			var selectorOPGroup = $('#ChooseGroup');
 			App_group.LoadSelectOP(selectorOPGroup,'','yes');
+			var selectorOPMasterGroup = $('#ChooseMasterGroup');		
+			App_master_group.LoadSelectOP(selectorOPMasterGroup,'','yes');
 			var selectorOPMember = $('#ChooseMember');
 			App_member.LoadSelectOP(selectorOPMember,'','yes');
 			App_list_member.Loaded();
+			App_master_group.Loaded();
 			App_group.Loaded();
 			App_member.Loaded();
 		},
@@ -1038,7 +1312,7 @@
 		App_list_member.SubmitData(selector,action,ID);
 	})
 
-	$(document).off('change', '#ChooseGroup,#ChooseMember').on('change', '#ChooseGroup,#ChooseMember',function(e) {
+	$(document).off('change', '#ChooseGroup, #ChooseMasterGroup,#ChooseMember').on('change', '#ChooseGroup,#ChooseMember',function(e) {
 		oTableListMember.ajax.reload(null, false);
 	})
 	
@@ -1056,11 +1330,34 @@
 		App_list_member.SubmitData(selector,action,ID);
 	})
 
+	$(document).off('click', '.btn-add-master-group').on('click', '.btn-add-master-group',function(e) {
+	   App_master_group.Form_modal();
+	})
 	
 	$(document).off('click', '.btn-add-group').on('click', '.btn-add-group',function(e) {
 	   App_group.Form_modal();
 	}) 
 
+	$(document).off('click', '#ModalbtnSaveFormMasterGroup').on('click', '#ModalbtnSaveFormMasterGroup',function(e) {
+		var selector = $(this);
+		var action = selector.attr('action');
+		var ID = selector.attr('data-id');
+		App_master_group.SubmitData(selector,action,ID);
+	})
+
+	$(document).off('click', '.btnEditMasterGroup').on('click', '.btnEditMasterGroup',function(e) {
+		var action = 'edit';
+		var ID = $(this).attr('data-id');
+		var datatoken = $(this).attr('datatoken');
+		App_master_group.Form_modal(action,ID,datatoken);
+	})
+
+	$(document).off('click', '.btnDeleteMasterGroup').on('click', '.btnDeleteMasterGroup',function(e) {
+		var selector = $(this);
+		var action = 'delete';
+		var ID = selector.attr('data-id');
+		App_master_group.SubmitData(selector,action,ID);
+	})
 
 	$(document).off('click', '.btnEditGroup').on('click', '.btnEditGroup',function(e) {
 		var action = 'edit';
@@ -1082,6 +1379,7 @@
 		var ID = selector.attr('data-id');
 		App_group.SubmitData(selector,action,ID);
 	})
+	
 
 	$(document).off('click', '.btn-add-member').on('click', '.btn-add-member',function(e) {
 	   App_member.Form_modal();

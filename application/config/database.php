@@ -14,7 +14,7 @@ switch ($ServerName) {
         $db['default']['password'] = ($_SERVER['SERVER_PORT']=='8080') ? '' : '';
 
 
-//        $db['default']['hostname'] = '10.1.30.18';
+//        $db['default']['hostname'] = '149.129.247.52';
 //        $db['default']['username'] = 'db_itpu';
 //        $db['default']['password'] = 'Uap)(*&^%';
 
@@ -94,7 +94,7 @@ switch ($ServerName) {
         break;
 
     default:
-        $db['default']['hostname'] = '10.1.30.18';
+        $db['default']['hostname'] = '149.129.247.52';
         $db['default']['username'] = 'db_itpu';
         $db['default']['password'] = 'Uap)(*&^%';
         $db['default']['database'] = 'db_academic';
@@ -110,7 +110,7 @@ switch ($ServerName) {
         $db['default']['autoinit'] = TRUE;
         $db['default']['stricton'] = FALSE;
 
-        $db['statistik']['hostname'] = '10.1.30.18';
+        $db['statistik']['hostname'] = '149.129.247.52';
         $db['statistik']['username'] = 'db_itpu';
         $db['statistik']['password'] = 'Uap)(*&^%';
         $db['statistik']['database'] = 'db_statistik';
