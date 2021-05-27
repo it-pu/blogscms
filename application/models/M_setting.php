@@ -14,8 +14,13 @@ class M_setting extends CI_Model{
         return $hasil;
     }
 
-    public function Group_LoadData(){
-        $hasil = $this->db->query('select * from db_blogs.set_group where Active = 1 ')->result_array();
+    public function Group_LoadData(){        
+        $hasil = $this->db->query('select * from db_blogs.set_group where Active = 1 ')->result_array();        
+        return $hasil;
+    }
+
+    public function Group_LoadDataSelect($idgroup){        
+        $hasil = $this->db->query('select * from db_blogs.set_group where ID_master_group="'.$idgroup.'" and Active = 1 ')->result_array();        
         return $hasil;
     }
 

@@ -313,11 +313,11 @@
 		    				'<div class = "col-md-12">'+
 		    					'<div class = "form-group">'+
 		    						'<label>Choose Master Group</label>'+
-		    						'<select class = "form-control FrmListMember" name = "ID_master_group"></select>'+
+		    						'<select class = "form-control FrmListMember" id="ID_master_group" name = "ID_master_group"></select>'+
 		    					'</div>'+
 		    					'<div class = "form-group">'+
 		    						'<label>Choose Group</label>'+
-		    						'<select class = "form-control FrmListMember" name = "ID_set_group"></select>'+
+		    						'<select class = "form-control FrmListMember" id="ID_set_group" name = "ID_set_group"></select>'+
 		    					'</div>'+
 		    					'<div class = "form-group">'+
 		    						'<label>Choose Level Member</label>'+
@@ -830,7 +830,7 @@
 		LoadSelectOP : function(selector,dataselected='',filter='yes'){
 			var url = base_url_js+'__data_setting_master_group';
 			var dataform = {
-				action : 'LoadData',
+				action : 'LoadData',				
 			}; 
 			var token = jwt_encode(dataform,'UAP)(*');
 		    AjaxSubmit(url,token).then(function(response){
@@ -937,7 +937,7 @@
 			    'backdrop' : 'static'
 			});
 			var selectorOPMasterGroup = $('.FrmGroup[name="ID_master_group"]');
-			App_master_group.LoadSelectOP(selectorOPMasterGroup,'','');
+			App_master_group.LoadSelectOP(selectorOPMasterGroup,'','');			
 			if(action == 'edit'){
 				var dt = jwt_decode(datatoken);
 				var firstLoad = setInterval(function () {
@@ -1048,6 +1048,28 @@
 			var url = base_url_js+'__data_setting_group';
 			var dataform = {
 				action : 'LoadData',
+			}; 
+			var token = jwt_encode(dataform,'UAP)(*');
+		    AjaxSubmit(url,token).then(function(response){
+		    	selector.empty();
+		    	for (var i = 0; i < response.length; i++) {
+		    		if (i==0 && filter == 'yes') {
+		    			selector.append('<option value="'+'%'+'">'+'--All--'+'</option>')
+		    		}
+		    		var selected = (response[i].ID_set_group == dataselected) ? 'selected' : '';
+		    		selector.append('<option value="'+response[i].ID_set_group+'" '+selected+' >'+response[i].GroupName+'</option>');
+		    	}
+			}).fail(function(response){
+		        toastr.error('No data result');
+		    })
+		},
+
+		LoadSelectGroup : function(selector,dataselected='',datamaster,filter='yes'){
+			// console.log(datamaster);
+			var url = base_url_js+'__data_setting_group';
+			var dataform = {
+				action : 'LoadSelect',
+				idgroup : datamaster,
 			}; 
 			var token = jwt_encode(dataform,'UAP)(*');
 		    AjaxSubmit(url,token).then(function(response){
@@ -1300,6 +1322,13 @@
 		$('.FrmListMember[name="NIPNPM"]').closest('.form-group').find('label[for="Name"]').html('');
 	})
 
+	$(document).off('change', '#ID_master_group').on('change', '#ID_master_group',function(e) {
+		var dataMaster = $('.FrmListMember[name="ID_master_group"]').val();
+		var selectorOPsetGroup = $('.FrmListMember[name="ID_set_group"]').val('');
+		// alert(selectorOPMasterGroup);
+		App_group.LoadSelectGroup(selectorOPsetGroup,'',dataMaster,'yes');
+	})
+
 	$(document).off('click', '.SearchNIPNPM').on('click', '.SearchNIPNPM',function(e) {
 		var selector = $(this);
 		App_list_member.searchMember(selector);	
@@ -1312,7 +1341,7 @@
 		App_list_member.SubmitData(selector,action,ID);
 	})
 
-	$(document).off('change', '#ChooseGroup, #ChooseMasterGroup,#ChooseMember').on('change', '#ChooseGroup,#ChooseMember',function(e) {
+	$(document).off('change', '#ChooseGroup, #ChooseMasterGroup,#ChooseMember').on('change', '#ChooseGroup, #ChooseMasterGroup, #ChooseMember',function(e) {
 		oTableListMember.ajax.reload(null, false);
 	})
 	

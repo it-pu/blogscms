@@ -589,11 +589,17 @@ class C_content extends MY_Controller {
         header('Content-Type: application/json');
         $Input = $this->getInputToken();
         $action = $Input['action'];
+        // $idgroup = $Input['idgroup'];
+        
         $rs = [];
         switch ($action) {
             case 'LoadData':
                 $rs = $this->m_setting->Group_LoadData();
                 break;
+            case 'LoadSelect':
+                $idgroup = $Input['idgroup'];
+                $rs = $this->m_setting->Group_LoadDataSelect($idgroup);
+                break;    
             case 'datatables':
                 $rs = $this->m_setting->Group_LoadData_datatables();
                 break;
