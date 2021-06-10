@@ -353,14 +353,14 @@
 			var selectorOPGroup = $('.FrmListMember[name="ID_set_group"]');
 			var selectorOPMasterGroup = $('.FrmListMember[name="ID_master_group"]');
 			var selectorOPMember = $('.FrmListMember[name="ID_set_member"]');
-			App_group.LoadSelectOP(selectorOPGroup,'','');
+			// App_group.LoadSelectOP(selectorOPGroup,'','');
 			App_master_group.LoadSelectOP(selectorOPMasterGroup,'','');
 			App_member.LoadSelectOP(selectorOPMember,'','');
 			if(action == 'edit'){
-				$('#GlobalModalLarge').find('input').prop('disabled',true);
-				$('#GlobalModalLarge').find('select').prop('disabled',true);
-				$('#GlobalModalLarge').find('#ModalbtnSaveFormListMember').prop('disabled',true);
-				$('#GlobalModalLarge').find('button').prop('disabled',true);
+				// $('#GlobalModalLarge').find('input').prop('disabled',true);
+				// $('#GlobalModalLarge').find('select').prop('disabled',true);
+				// $('#GlobalModalLarge').find('#ModalbtnSaveFormListMember').prop('disabled',true);
+				// $('#GlobalModalLarge').find('button').prop('disabled',true);
 				var dt = jwt_decode(datatoken);
 				var firstLoad = setInterval(function () {
 			            var ChooseGroup = selectorOPGroup.val();
