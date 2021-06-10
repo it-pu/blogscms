@@ -155,20 +155,26 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label">Post To:</label>
 						<div class="col-md-9">
-							<?php $AS = (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)) ? $this->session->userdata('AS') : $Arr_AS  ?>
-							<select class="form-control" name="ID_set_group" id="ID_set_group">
+							<?php $AS = (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)) ? $this->session->userdata('AS') : $Arr_ASmaster  ?>
+							<select class="form-control" name="ID_master_group" id="PostTo">
 								<?php for ($i=0; $i < count($AS) ; $i++): ?>
-									<?php $selected = ($AS[$i]['ID_set_group'] == 0) ? 'selected' : '' ?>
-									<option value="<?php echo $AS[$i]['ID_set_group'] ?>"><?php echo $AS[$i]['GroupName'] ?></option>
+									<?php $selected = ($AS[$i]['ID_master_group'] == 0) ? 'selected' : '' ?>
+									<option value="<?php echo $AS[$i]['ID_master_group'] ?>"><?php echo $AS[$i]['MasterGroupName'] ?></option>
 								<?php endfor ?>
 							</select>
 							 <span class="help-block"></span>
 							
 						</div>
 					</div>
-					<!-- <div class="form-actions">
-						<button class="btn btn-primary pull-right" id="btn_save"><i class="icon-check"></i> Submit</button>
-					</div> -->
+					<div class="form-group">
+						<label class="col-md-2 control-label">Sub Post:</label>
+						<div class="col-md-9">	
+							<select class="form-control" name="ID_set_group" id="PostSub">
+								<option value="">Select</option>	
+							</select>
+							<span class="help-block"></span>
+						</div>
+					</div>
 				
             </div>
             <div class="modal-footer">
@@ -257,7 +263,7 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-md-2 control-label">AS:</label>
 						<div class="col-md-9">
 							<?php $AS = (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)) ? $this->session->userdata('AS') : $Arr_AS  ?>
@@ -269,6 +275,30 @@
 							</select>
 							 <span class="help-block"></span>
 							
+						</div>
+					</div> -->
+
+					<div class="form-group">
+						<label class="col-md-2 control-label">Post To:</label>
+						<div class="col-md-9">
+							<?php $AS = (!in_array($this->session->userdata('DivisionID') , $AuthDivisionCrud)) ? $this->session->userdata('AS') : $Arr_ASmaster  ?>
+							<select id="PostToEdit" onclick="Post_onclik()" class="form-control" name="EditID_master_group" >
+								<?php for ($i=0; $i < count($AS) ; $i++): ?>
+									<?php $selected = ($AS[$i]['ID_master_group'] == 0) ? 'selected' : '' ?>
+									<option value="<?php echo $AS[$i]['ID_master_group'] ?>"><?php echo $AS[$i]['MasterGroupName'] ?></option>
+								<?php endfor ?>
+							</select>
+							 <span class="help-block"></span>
+							
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">Sub Post:</label>
+						<div class="col-md-9">	
+							<select id="PostSubEdit" class="form-control" name="EditID_set_group" >
+								<option value="">No Select</option>	
+							</select>
+							<span class="help-block"></span>
 						</div>
 					</div>
 					<!-- <div class="form-actions">
@@ -407,8 +437,51 @@
         });
 	}
 
-
-
+	// ======== change Post to ======= //
+		
+		$('#PostTo').on('change', function() {
+		  var ID_master_group = $('#PostTo').val();
+		  if(ID_master_group != '')
+		  {
+			$.ajax({
+				type  : 'ajax',
+				url   : base_url_js +'c_content/change_post_to',
+				method:"POST",
+				data:{ID_master_group:ID_master_group},
+				success:function(data)
+				{
+				 	$('#PostSub').html(data);
+				}
+			});
+		  }
+		  else
+		  {
+		   $('#PostSub').html('<option value="">Selected</option>');
+		  }
+	 	});
+	/// ===========
+	function Post_onclik(){
+	 	$('#PostToEdit').on('change', function() {
+		  var ID_master_group = $('#PostToEdit').val();
+		  if(ID_master_group != '')
+		  {
+			$.ajax({
+				type  : 'ajax',
+				url   : base_url_js +'c_content/change_post_to',
+				method:"POST",
+				data:{ID_master_group:ID_master_group},
+				success:function(data)
+				{
+				 	$('#PostSubEdit').html(data);
+				}
+			});
+		  }
+		  else
+		  {
+		   $('#PostSubEdit').html('<option value="">Selected</option>');
+		  }
+	 	});
+	 }
 	// ===== View List Data ==== //
 	//function show all article
 
@@ -480,7 +553,7 @@
                             '<td>'+data[i].CreateAT+' </td>'+
                             '<td><span class="label '+data[i].Status+'">'+data[i].Status+' </span> </td>'+
                             '<td style="text-align:left;">'+
-                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+jwt_encode(data[i].Content,'UAP)(*')+'" data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" ID_set_group = "'+data[i].ID_set_group+'" >Edit</a>'+' '+
+                                '<a href="#modal_edit" id="show_edit_article"  data-toggle="modal"  class="btn btn-info btn-sm " data-idtitle="'+data[i].ID_title+'" data-category="'+data[i].ID_category+'" data-content="'+jwt_encode(data[i].Content,'UAP)(*')+'" data-images="'+data[i].Images+'" data-title="'+data[i].Title+'" data-url="'+data[i].Url+'" data-status="'+data[i].Status+'" data-ID_master_group = "'+data[i].ID_master_group+'" data-ID_set_group = "'+data[i].ID_set_group+'" data-GroupName = "'+data[i].GroupName+'" onClick="edit_artikel()">Edit</a>'+' '+
                                 '<a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-sm item_delete" data-idtitle="'+data[i].ID_title+'">Delete</a>'+
                             '</td>'+
                             '</tr>';
@@ -495,7 +568,9 @@
     }
 
     	// ===== View Data Edit ====== //
-	$('#show_data').on('click','#show_edit_article',function(){
+    function edit_artikel(){
+		$('#show_data').on('click','#show_edit_article',function(){
+
 			var id = $(this).data('idtitle');
 			var title = $(this).data('title');
 			var category = $(this).data('category');
@@ -503,11 +578,16 @@
 			var url = $(this).data('url');
 			var status = $(this).data('status');
 			var images = $(this).data('images');
-			var ID_set_group = $(this).attr('id_set_group');
+			var id_master_group = $(this).data('id_master_group');
+			var id_set_group = $(this).data('id_set_group');
+			var groupname = $(this).data('groupname');
+			
 		    //Ajax Load data from ajax
-		    		 		
             $('[name="idtitle_edit"]').val(id);
             $('[name="title_edit"]').val(title);
+            $('[name="EditID_master_group"]').val(id_master_group).trigger('change');
+            // $('[name="EditID_set_group"]').val(id_set_group).trigger('change');
+            $('select[name="EditID_set_group"]').append('<option value="'+ id_set_group +'" selected>'+ groupname +'</option>').trigger('change');
 
             // $('[name="category_edit"]').val(category);
             $("#category_edit option").filter(function() {
@@ -515,10 +595,15 @@
                return $(this).val() == category; 
             }).prop("selected", true);
             
-            $("#ID_set_group option").filter(function() {
-               //may want to use $.trim in here
-               return $(this).val() == ID_set_group; 
-            }).prop("selected", true);
+            // $("#PostTo option").filter(function() {
+            //    //may want to use $.trim in here
+            //    return $(this).val() == ID_master_group; 
+            // }).prop("selected", true);
+
+            // $("#PostSubEdit option").filter(function() {
+            //    //may want to use $.trim in here
+            //    return $(this).val() == id_set_group; 
+            // }).prop("selected", true);
 
             // $('#show_cat_edit_edit').append('<option value="'+category+'" selected>'+category+'</option>');
             $('[name="content_edit"]').summernote("code",content);
@@ -548,7 +633,7 @@
             $('#alert1').removeClass('active');
 
         });
-		
+	}
    // ====== Save ===== //
 
     //function add all article
@@ -579,7 +664,8 @@
             			$('#alert').removeClass('none');
             			$('#myModal').modal('hide');
                 		show_article();
-                		location.reload(); 
+                		edit_artikel();
+                		window.location.reload();
 		            }
 		            else
 		            {
@@ -648,6 +734,8 @@
             				 }, 1000);
             			
                 		show_article();
+                		edit_artikel();
+                		window.location.reload();
 		            }
 		            else
 		            {

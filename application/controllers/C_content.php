@@ -32,6 +32,7 @@ class C_content extends MY_Controller {
 
     public function article()
     {
+        $data['Arr_ASmaster'] =  $this->db->query('select * from db_blogs.set_master_group where Active = 1')->result_array();
         $data['Arr_AS'] =  $this->db->query('select * from db_blogs.set_group where (Active = 1 or ID_set_group = 0) ')->result_array();
         $data['Arr_Topic'] =  json_encode($this->db->query('select * from db_blogs.topic')->result_array());
         $content = $this->load->view('V_article',$data,true);
@@ -55,6 +56,13 @@ class C_content extends MY_Controller {
     {
         $content = $this->load->view('V_category','',true);
         parent::template($content);
+    }
+    function change_post_to()
+    {
+        if($this->input->post('ID_master_group'))
+        {
+            echo $this->m_article->get_change_post_to($this->input->post('ID_master_group'));
+        }
     }
     public function banner()
     {
@@ -259,9 +267,9 @@ class C_content extends MY_Controller {
                 'Status' => $this->input->post('status_edit'),
                 'CreateAT1' => $dataTime,
                 'UpdateBY1' => $this->session->userdata('Username'),
-                'ID_set_group' => $this->input->post('ID_set_group'),
+                'ID_master_group' => $this->input->post('EditID_master_group'),
+                'ID_set_group' => $this->input->post('EditID_set_group'),
             );
- 
         // if($this->input->post('remove_photo')) // if remove photo checked
         // {
         //     if(file_exists('upload/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))

@@ -46,15 +46,16 @@ class M_article extends CI_Model{
             $WhereOrAnd = ($Addwhere == '') ? ' Where ' : ' And ';
             $Addwhere = $WhereOrAnd.' a.UpdateBY ="'.$this->session->userdata('Username').'" ';
         }
-		$hasil= $this->db->query('SELECT a.*,b.Name,c.GroupName,'.$this->getNameUpdateBY().',c.GroupName,
+		$hasil= $this->db->query('SELECT a.*,b.Name,c.GroupName,'.$this->getNameUpdateBY().',d.MasterGroupName,
                                         (
                                             SELECT Count(sv.id_article) 
                                             FROM db_blogs.site_visits sv 
                                             WHERE sv.id_article = a.ID_title
                                         ) as Tot_Visit 
                                     FROM  db_blogs.article AS a
-                                    JOIN  db_blogs.category AS b on a.ID_category =  b.ID_category
-                                    JOIN  db_blogs.set_group AS c on a.ID_set_group = c.ID_set_group
+                                    LEFT JOIN  db_blogs.category AS b on a.ID_category =  b.ID_category
+                                    LEFT JOIN  db_blogs.set_group AS c on a.ID_set_group = c.ID_set_group
+                                    LEFT JOIN  db_blogs.set_master_group AS d on a.ID_master_group = d.ID_master_group
                                     '.$Addwhere.'
                                     ORDER BY ID_title DESC')->result_array();
         // print_r($this->db->last_query());die();
@@ -144,8 +145,6 @@ class M_article extends CI_Model{
         return $this->db->get_where('db_blogs.article', array('ID_title' => $id))->row();
 	}
 
-   
-
 	public function update_category($where, $data)
     {
     	$this->db->where('ID_category',$where);
@@ -190,8 +189,21 @@ class M_article extends CI_Model{
         
     }
 
-
     // ========== END CRUD ====== //
-
+    
+    function get_change_post_to($ID_master_group)
+    {
+        $this->db->where('ID_master_group', $ID_master_group);
+        $this->db->where('Active', 1);
+        $this->db->order_by('ID_set_group', 'ASC');
+        $query = $this->db->get('db_blogs.set_group');
+        $output = '';
+        foreach($query->result() as $row)
+        {
+            $output .= '<option value="'.$row->ID_set_group.'">'.$row->GroupName.'</option>';
+            
+        }
+        return $output;
+    }
 
 }
